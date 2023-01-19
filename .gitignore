@@ -1,4 +1,6 @@
-# Ignore everything in this directory
-*
-# Except this file
-!.gitignore
+.devcontainer
+.vscode
+.idea
+__pycache__
+.coverage
+.env

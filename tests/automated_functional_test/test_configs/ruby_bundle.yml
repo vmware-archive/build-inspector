@@ -1,0 +1,39 @@
+# Copyright 2020-2023 VMware, Inc.
+# SPDX-License-Identifier: BSD-2-Clause
+
+name: ruby_bundle
+description: Test for the ruby bundler dependency extractor
+config:
+  input_data: |
+          root@02424c6b934f:/# bundle install
+          Fetching gem metadata from https://rubygems.org/.
+          Resolving dependencies...
+          Using bundler 2.2.32
+          Fetching python 0.0.1
+          Installing python 0.0.1
+          Fetching sqlite3 1.4.2
+          Installing sqlite3 1.4.2 with native extensions
+          Bundle complete! 2 Gemfile dependencies, 3 gems now installed.
+          Use `bundle info [gemname]` to see where a bundled gem is installed.
+          root@02424c6b934f:/# bundle install
+          Fetching gem metadata from https://rubygems.org/.
+          Resolving dependencies...
+          Using bundler 2.2.32
+          Fetching package 0.0.1
+          Installing package 0.0.1
+          Bundle complete! 1 Gemfile dependency, 2 gems now installed.
+          Use `bundle info [gemname]` to see where a bundled gem is installed.
+  expected_dependencies:
+    - type: ruby
+      name:  python
+      version: 0.0.1
+      download_location: Unknown
+    - type: ruby
+      name:  sqlite3
+      version: 1.4.2
+      download_location: Unknown
+    - type: ruby
+      name:  package
+      version: 0.0.1
+      download_location: Unknown
+   

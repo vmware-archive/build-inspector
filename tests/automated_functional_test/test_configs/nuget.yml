@@ -1,0 +1,53 @@
+# Copyright 2020-2023 VMware, Inc.
+# SPDX-License-Identifier: BSD-2-Clause
+
+name: nuget
+description: Test for the nuget dependency extractor
+config:
+  input_data: |
+    nuget install Newtonsoft.json -OutputDirectory packages
+    nuget install packages.config -OutputDirectory packages
+    nuget install elmah
+    nuget install ninject -OutputDirectory c:\proj
+    nuget install DevExtreme.AspNet.Core -Source https://nuget.devexpress.com/api
+    nuget.exe install Newtonsoft.json -Version 4.0.5
+    mono /usr/local/bin/nuget.exe install MyPackage -Source https://nuget.devexpress.com/api -Source https://api.nuget.org/v3/index.json -DependencyVersion Lowest -OutputDirectory c:\Temp\Output
+    #6 [resource  3/23] RUN apt install -y --no-install-recommends     curl     nuget     gzip     jq     openssl     libssl-dev     make     g++     openssh-client     libstdc++6
+  expected_dependencies:
+    - name: Newtonsoft.json
+      version: Unknown
+      type: nuget
+      extraction_source: nuget install Newtonsoft.json -OutputDirectory packages
+      download_location: 'Newtonsoft.json'
+    - name: packages.config
+      version: Unknown
+      type: nuget
+      extraction_source: nuget install packages.config -OutputDirectory packages
+      download_location: 'packages.config'
+    - name: elmah
+      version: Unknown
+      type: nuget
+      extraction_source: nuget install elmah
+      download_location: elmah
+    - name: ninject
+      version: Unknown
+      type: nuget
+      extraction_source: nuget install ninject -OutputDirectory c:\proj
+      download_location: 'ninject'
+    - name: DevExtreme.AspNet.Core
+      version: Unknown
+      type: nuget
+      extraction_source: nuget install DevExtreme.AspNet.Core -Source https://nuget.devexpress.com/api
+      download_location: https://nuget.devexpress.com/api
+    - name: Newtonsoft.json
+      version: 4.0.5
+      type: nuget
+      extraction_source: nuget.exe install Newtonsoft.json -Version 4.0.5
+      download_location: 'Newtonsoft.json'
+    - name: MyPackage
+      version: Unknown
+      type: nuget
+      extraction_source: nuget.exe install MyPackage -Source c:\Temp\Packages -Source
+        https://api.nuget.org/v3/index.json -DependencyVersion Lowest -OutputDirectory
+        c:\Temp\Output
+      download_location: https://nuget.devexpress.com/api, https://api.nuget.org/v3/index.json

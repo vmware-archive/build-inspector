@@ -1,0 +1,33 @@
+# Copyright 2020-2023 VMware, Inc.
+# SPDX-License-Identifier: BSD-2-Clause
+
+name: dockerbuild
+description: Test for the docker build dependency extractor
+config:
+  input_data: |
+         docker build .
+         [+] Building 47.3s (10/10) FINISHED
+          => [internal] load build definition from Dockerfile                                                                                                                                                                                                                                                                                    0.1s
+          => => transferring dockerfile: 491B                                                                                                                                                                                                                                                                                                    0.0s
+          => [internal] load .dockerignore                                                                                                                                                                                                                                                                                                       0.1s
+          => => transferring context: 2B                                                                                                                                                                                                                                                                                                         0.0s
+          => [internal] load metadata for myrepo.local/dockerhub-proxy-cache/library/python:3.9-slim                                                                                                                                                                                                                                   6.1s
+          => [internal] load build context                                                                                                                                                                                                                                                                                                       0.1s
+          => => transferring context: 24.07kB                                                                                                                                                                                                                                                                                                    0.0s
+          => [1/5] FROM myrepo.local/dockerhub-proxy-cache/library/python:3.9-slim@sha256:d67e4b3e185208a010e0d06dd1f655292dd92c5dd08a64b1c59a0acbd387b1e9                                                                                                                                                                             0.7s
+          => => resolve myrepo.local/dockerhub-proxy-cache/library/python:3.9-slim@sha256:d67e4b3e185208a010e0d06dd1f655292dd92c5dd08a64b1c59a0acbd387b1e9                                                                                                                                                                             0.0s
+          => => sha256:ae3c4906b72ce3dd2c8eefa9ff13b3a3a6120ff7a9408dbe7c2ef77a9a8f9b80 7.88kB / 7.88kB                                                                                                                                                                                                                                          0.0s
+          => => sha256:d67e4b3e185208a010e0d06dd1f655292dd92c5dd08a64b1c59a0acbd387b1e9 1.86kB / 1.86kB                                                                                                                                                                                                                                          0.0s
+          => => sha256:aad7f2c3948e6f41205b74047acfb3d5e1730a906f9a7f5b073966865965bc5f 1.37kB / 1.37kB                                                                                                                                                                                                                                          0.0s
+          => [2/5] COPY ./code/ /code/                                                                                                                                                                                                                                                                                                           0.1s
+          => [3/5] RUN apt-get update && apt-get upgrade -y && apt-get -y install gcc yara && rm -rf /var/lib/apt/lists*                                                                                                                                                                                                                        23.2s
+          => [4/5] RUN pip install -r code/requirements.txt                                                                                                                                                                                                                                                                                     15.7s
+          => [5/5] WORKDIR /code                                                                                                                                                                                                                                                                                                                 0.2s
+          => exporting to image                                                                                                                                                                                                                                                                                                                  1.1s
+          => => exporting layers                                                                                                                                                                                                                                                                                                                 1.1s
+          => => writing image sha256:1b2dcef5c93836f17cc2638666f9cabddcdef9b393bbc48598840964d885585d
+  expected_dependencies:
+    - type: docker
+      name:  python
+      version: 3.9-slim@sha256:d67e4b3e185208a010e0d06dd1f655292dd92c5dd08a64b1c59a0acbd387b1e9
+      download_location: myrepo.local/dockerhub-proxy-cache/library

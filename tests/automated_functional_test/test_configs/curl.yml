@@ -1,0 +1,48 @@
+# Copyright 2020-2023 VMware, Inc.
+# SPDX-License-Identifier: BSD-2-Clause
+
+name: curl
+description: Test for the wget dependency extractor
+config:
+  input_data: |
+    curl -o output.txt http://example.com
+    curl https://httpstat.us/400 -f
+    curl http://executable.sh | bash
+    curl ftp://user@host/foo/bar.txt
+    curl www.helloworld.com > test.file
+    
+    8 [resource  5/23] RUN curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash
+    
+    6 [resource  3/23] RUN apt install -y --no-install-recommends     curl     gnupg     gzip     jq     openssl     libssl-dev     make     g++     openssh-client     libstdc++6     software-properties-common
+  expected_dependencies:
+    - type: curl
+      name:  example.com
+      version: Unknown
+      extraction_source: curl -o output.txt http://example.com
+      download_location: http://example.com
+    - type: curl
+      name:  httpstat.us/400
+      version: Unknown
+      extraction_source: curl https://httpstat.us/400
+      download_location: https://httpstat.us/400
+    - type: curl
+      name:  executable.sh
+      version: Unknown
+      extraction_source: curl http://executable.sh
+      download_location: http://executable.sh
+    - type: curl
+      name:  user@host/foo/bar.txt
+      version: Unknown
+      extraction_source: curl ftp://user@host/foo/bar.txt
+      download_location: ftp://user@host/foo/bar.txt
+    - type: curl
+      name:  helloworld.com
+      version: Unknown
+      extraction_source: curl www.helloworld.com
+      download_location: www.helloworld.com
+    - type: curl
+      name:  packagecloud.io/install/repositories/github/git-lfs/script.deb.sh
+      version: Unknown
+      extraction_source: RUN curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh
+      download_location: https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh
+
