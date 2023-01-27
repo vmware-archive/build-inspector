@@ -9,7 +9,7 @@ on:
       - 'v*'
 
 env:
-  REGISTRY: ghcr.io
+  REGISTRY: projects.registry.vmware.com/build_inspector/
   IMAGE_NAME: build-inspector
 
 jobs:
@@ -24,8 +24,8 @@ jobs:
       uses: docker/login-action@v2
       with:
         registry: ${{ env.REGISTRY }}
-        username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
+        username: ${{ secrets.HARBOR_USER }}
+        password: ${{ secrets.HARBOR_TOKEN }}
     - name: Build and Push Main
       id: build-and-push-main
       uses: docker/build-push-action@v2
