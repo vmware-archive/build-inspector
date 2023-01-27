@@ -9,7 +9,7 @@ on:
       - 'v*'
 
 env:
-  REGISTRY: projects.registry.vmware.com/build_inspector/
+  REGISTRY: projects.registry.vmware.com/build_inspector
   IMAGE_NAME: build-inspector
 
 jobs:
