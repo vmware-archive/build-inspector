@@ -11,7 +11,7 @@ on:
 env:
   REGISTRY: projects.registry.vmware.com
   PROJECT: build_inspector
-  IMAGE_NAME: build-inspector
+  IMAGE_NAME: build_inspector
 
 jobs:
 
