@@ -133,7 +133,7 @@ def test_generate_findings_buildlog(
     mock_generate_findings.return_value = EXPECTED_RETURN
 
     # Act
-    response = test_client.post(f"/v1/findings?type={TYPE}", POST_DATA)
+    response = test_client.post(url=f"/v1/findings?type={TYPE}", content=POST_DATA)
 
     # Assert
     assert response.status_code == 200
@@ -147,7 +147,7 @@ def test_generate_findings_nonimplemented(test_client: TestClient):
     TYPE = "anotimplementedtypeofgenerator"
 
     # Act
-    response = test_client.post(f"/v1/findings?type={TYPE}", POST_DATA)
+    response = test_client.post(url=f"/v1/findings?type={TYPE}", content=POST_DATA)
 
     # Assert
     assert response.status_code == http.client.BAD_REQUEST
@@ -164,7 +164,7 @@ def test_generate_deps_buildlog(
     mock_generate_deps.return_value = EXPECTED_RETURN
 
     # Act
-    response = test_client.post(f"/v1/dependencies?type={TYPE}", POST_DATA)
+    response = test_client.post(url=f"/v1/dependencies?type={TYPE}", content=POST_DATA)
 
     # Assert
     assert response.status_code == 200
@@ -178,7 +178,7 @@ def test_generate_deps_nonimplemented(test_client: TestClient):
     TYPE = "anotimplementedtypeofgenerator"
 
     # Act
-    response = test_client.post(f"/v1/dependencies?type={TYPE}", POST_DATA)
+    response = test_client.post(url=f"/v1/dependencies?type={TYPE}", content=POST_DATA)
 
     # Assert
     assert response.status_code == http.client.BAD_REQUEST
@@ -199,7 +199,7 @@ def test_generate_report_buildlog(
     mock_generate_findings.return_value = EXPECTED_RETURN
 
     # Act
-    response = test_client.post(f"/v1/report?type={TYPE}", POST_DATA)
+    response = test_client.post(url=f"/v1/report?type={TYPE}", content=POST_DATA)
 
     # Assert
     assert response.status_code == 200
@@ -217,7 +217,7 @@ def test_generate_report_nonimplemented(test_client: TestClient):
     TYPE = "anotimplementedtypeofgenerator"
 
     # Act
-    response = test_client.post(f"/v1/report?type={TYPE}", POST_DATA)
+    response = test_client.post(url=f"/v1/report?type={TYPE}", content=POST_DATA)
 
     # Assert
     assert response.status_code == http.client.BAD_REQUEST
