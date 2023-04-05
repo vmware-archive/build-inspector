@@ -27,14 +27,15 @@ class YumParser(ParserBase):
     def on_load(self) -> None:
         self.yumblock_extractor_regex = re.compile(
             "^\W*=+$(\n|\r\n|\W)*Package(\n|\r\n|\W)+Arch(itecture)?(\n|\r\n|\W)+Version(\n|\r\n|\W)+Repository(\n|\r\n|\W)+Size(\n|\r\n|\W)^\W*=+$([\s\S]*?)Transaction Summary(\n|\r\n)^\W*=+$",
-            re.MULTILINE,
+            re.MULTILINE | re.IGNORECASE,
         )
         self.dependency_extractor_regex = re.compile(
             "( (?P<name>\S+)\s+(?P<arch>\S+)\s+(?P<version>\d\S+)\s+(?P<repo>\S+)\s+[\d\.]+ [kMGb])"
+            re.IGNORECASE,
         )
         self.fastest_mirror_block_detection = re.compile(
             "((Determining fastest mirrors|Loading mirror speeds from cached hostfile)(\n|\r\n)(\s\*\s.*(\n|\r\n))+)",
-            re.MULTILINE,
+            re.MULTILINE | re.IGNORECASE,
         )
         self.mirror_mapping_extraction = re.compile("\s\*\s(\w+):\s(\S+)")
 
