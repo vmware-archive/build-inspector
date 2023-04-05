@@ -45,9 +45,7 @@ class WgetParser(ParserBase):
 
     def get_document_dependencies(self, document: str) -> List[ExtractedDependency]:
         dependencies = []
-        print(f'Started blocks - {time.time()}')
         wget_blocks = self.wget_block_extractor_regex.findall(document)
-        print(f'ended blocks - {time.time()}')
         for block in wget_blocks:
             command = block[0]
             urls = self.url_extractor_regex.findall(command)
