@@ -364,13 +364,13 @@ config:
   expected_dependencies:
     - type: wget
       name:  latest.zip
-      version: https://wordpress.org/latest.zip
-      download_location: 198.143.164.252
+      version: unknown
+      download_location: https://wordpress.org/latest.zip
     - type: wget
       name:  wordpress-install.zip
-      version: https://wordpress.org/latest.zip
-      download_location: 198.143.164.252
+      version: unknown
+      download_location: https://wordpress.org/latest.zip
     - type: wget
       name:  wordpress-install-docker-linux.zip
-      version: https://wordpress.org/latest.zip
-      download_location: 198.143.164.252
+      version: unknown
+      download_location: https://wordpress.org/latest.zip
