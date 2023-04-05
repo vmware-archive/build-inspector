@@ -16,6 +16,8 @@ from hashlib import sha1
 from json import dumps, loads
 from uuid import uuid4
 from io import StringIO
+from spdx.checksum import Algorithm, sha1, sha512
+import hashlib
 
 
 APP_VERSION = os.environ.get("SERVICE_VERSION", "0.0.0")
@@ -36,7 +38,12 @@ def create_base_spdx_document(name) -> Document:
     return newDocument
 
 def create_spdx_namespace(documentName: str) -> str:
-    return f'{SPDX_NAMESPACE_BASE}{documentName}-{uuid4()}'
+    namespace = f'{SPDX_NAMESPACE_BASE}{documentName}-{uuid4()}'
+    sha1_hash = sha1(namespace.encode('utf-8')).hexdigest()
+    sha512_hash = sha512(namespace.encode('utf-8')).hexdigest()
+    # return a dictionary containing both hash values
+    return {'sha1': sha1_hash, 'sha512': sha512_hash}
+
 
 def document_to_json(SPDX_document: Document) -> str:
     out_buffer = StringIO()
@@ -80,7 +87,7 @@ class SPDXBaseFormatter(BaseFormatter):
     @classmethod
     def format_report(cls, report: DocumentReport):
         SPDX_document = create_base_spdx_document('LogFileSource')
-        SPDX_document.package = Package(name=SPDX_document.name,spdx_id=SPDX_document.spdx_id)
+        SPDX_document.package = Package(name=SPDX_document.name, spdx_id=SPDX_document.spdx_id)
         for finding in report.findings:
             finding_annotation = Annotation()
             finding_annotation.annotator = SPDX_TOOL
@@ -89,19 +96,29 @@ class SPDXBaseFormatter(BaseFormatter):
             finding_annotation.annotation_type = "OTHER"
             finding_annotation.comment = finding.json()
             SPDX_document.add_annotation(finding_annotation)
+
         dependent_documents = []
         for dependency in report.dependencies:
             dep_document = create_base_spdx_document(dependency.name)
-            dep_document.package = Package(name=dependency.name, spdx_id=dep_document.spdx_id, download_location=dependency.download_location, version=dependency.version)
+            dep_document.package = Package(name=dependency.name, spdx_id=dep_document.spdx_id,
+                                            download_location=dependency.download_location, version=dependency.version)
+            checksums = create_spdx_namespace(dependency.name)
+            # set SHA1 checksum
+            dep_document_checksum = Algorithm(identifier="SHA1", value=checksums['sha1'])
+            Algorithm(identifier="SHA-512", value=hashlib.sha512(cls.__TO_METHOD__(dep_document).encode()).hexdigest())
+            # set SHA512 checksum
+            dep_document_checksum.add_algorithm(Algorithm(identifier="SHA512", value=checksums['sha512']))
             SPDX_document.ext_document_references.append(
                 ExternalDocumentRef(
                     external_document_id=dep_document.spdx_id,
-                    check_sum=Algorithm(identifier="SHA1",value=sha1(cls.__TO_METHOD__(dep_document).encode()).hexdigest()),
+                    check_sum=dep_document_checksum,
                     spdx_document_uri=dep_document.namespace
-                    )
-                    )
+                )
+            )
             dependent_documents.append(dep_document)
+
         return (SPDX_document, dependent_documents)
+
         
 
 class SPDXJsonFormatter(SPDXBaseFormatter):
