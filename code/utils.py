@@ -10,7 +10,7 @@ class TimeoutExpiredError(Exception):
 def timeout(seconds: int=1):
     def decorator(func):
         def _handler(signum, frame):
-            raise TimeoutExpiredError((f'Function {func.__name__} timed out after {seconds} seconds.',func.__name__, seconds))
+            raise TimeoutExpiredError(f'Function {func.__name__} timed out after {seconds} seconds.',func.__name__, seconds)
         
         @functools.wraps(func)
         def wrapper(*args, **kwargs):
