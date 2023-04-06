@@ -109,8 +109,8 @@ class SPDXJsonFormatter(SPDXBaseFormatter):
     MIME_TYPE = 'application/json'
 
     @classmethod
-    def format_dependencies(cls, dependencies: List[ExtractedDependency]):
-        dependent_docs = super().format_dependencies(dependencies)
+    def format_dependencies(cls, dependencies: List[ExtractedDependency], errors: List[str]):
+        dependent_docs = super().format_dependencies(dependencies, errors)
         return_value = f"[{','.join([document_to_json(doc) for doc in dependent_docs])}]"
         return return_value
 
@@ -125,8 +125,8 @@ class SPDXXMLFormatter(SPDXBaseFormatter):
     __TO_METHOD__ = document_to_xml
 
     @classmethod
-    def format_dependencies(cls, dependencies: List[ExtractedDependency]):
-        dependent_docs = super().format_dependencies(dependencies)
+    def format_dependencies(cls, dependencies: List[ExtractedDependency], errors: List[str]):
+        dependent_docs = super().format_dependencies(dependencies, errors)
         return_value = '\n---\n'.join([document_to_xml(doc) for doc in dependent_docs])
         return return_value
 
