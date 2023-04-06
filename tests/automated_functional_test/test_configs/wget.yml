@@ -371,6 +371,6 @@ config:
       version: unknown
       download_location: https://wordpress.org/latest.zip
     - type: wget
-      name:  wordpress-install-docker-linux.zip
+      name:  wordpress-install-linux.zip
       version: unknown
       download_location: https://wordpress.org/latest.zip

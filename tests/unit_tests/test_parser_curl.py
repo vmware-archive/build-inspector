@@ -57,50 +57,44 @@ def test_get_document_dependencies():
         ExtractedDependency(
             name='example.com',
             version='Unknown',
-            type='curl',
-            result=DependencyRelation.CONSUMED,
+            type='curl', result=DependencyRelation.CONSUMED,
             extraction_source='curl -o output.txt http://example.com',
             download_location='http://example.com'
         ),
         ExtractedDependency(
-            name='httpstat.us/400',
+            name='httpstat.us/400 ',
             version='Unknown',
-            type='curl',
-            result=DependencyRelation.CONSUMED,
-            extraction_source='curl https://httpstat.us/400',
-            download_location='https://httpstat.us/400'
+            type='curl', result=DependencyRelation.CONSUMED,
+            extraction_source='curl https://httpstat.us/400 -f',
+            download_location='https://httpstat.us/400 '
         ),
         ExtractedDependency(
-            name='executable.sh',
+            name='executable.sh ',
             version='Unknown',
-            type='curl',
-            result=DependencyRelation.CONSUMED,
-            extraction_source='curl http://executable.sh',
-            download_location='http://executable.sh'
+            type='curl', result=DependencyRelation.CONSUMED,
+            extraction_source='curl http://executable.sh | bash',
+            download_location='http://executable.sh '
         ),
         ExtractedDependency(
             name='user@host/foo/bar.txt',
             version='Unknown',
-            type='curl',
-            result=DependencyRelation.CONSUMED,
+            type='curl', result=DependencyRelation.CONSUMED,
             extraction_source='curl ftp://user@host/foo/bar.txt',
             download_location='ftp://user@host/foo/bar.txt'
         ),
         ExtractedDependency(
-            name='helloworld.com',
+            name='helloworld.com ',
             version='Unknown',
-            type='curl',
-            result=DependencyRelation.CONSUMED,
-            extraction_source='curl www.helloworld.com',
-            download_location='www.helloworld.com'
+            type='curl', result=DependencyRelation.CONSUMED,
+            extraction_source='curl www.helloworld.com > test.file',
+            download_location='www.helloworld.com '
         ),
         ExtractedDependency(
-            name='packagecloud.io/install/repositories/github/git-lfs/script.deb.sh',
+            name='packagecloud.io/install/repositories/github/git-lfs/script.deb.sh ',
             version='Unknown',
-            type='curl',
-            result=DependencyRelation.CONSUMED,
-            extraction_source='RUN curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh',
-            download_location='https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh'
+            type='curl', result=DependencyRelation.CONSUMED,
+            extraction_source='RUN curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash',
+            download_location='https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh '
         )
     ]
 
