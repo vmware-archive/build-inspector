@@ -10,12 +10,12 @@ class JsonFormatter(BaseFormatter):
     MIME_TYPE = 'application/json'
     
     @classmethod
-    def format_findings(cls, findings: List[ExtractedFinding]):
-        return dumps([finding.dict() for finding in findings])
+    def format_findings(cls, findings: List[ExtractedFinding], errors: List[str]):
+        return dumps({"findings":[finding.dict() for finding in findings],"errors":errors})
 
     @classmethod
-    def format_dependencies(cls, dependencies: List[ExtractedDependency]):
-        return dumps([dependency.dict() for dependency in dependencies])
+    def format_dependencies(cls, dependencies: List[ExtractedDependency], errors: List[str]):
+        return dumps({"dependencies":[dependency.dict() for dependency in dependencies],"errors":errors})
 
     @classmethod
     def format_report(cls, report: DocumentReport):

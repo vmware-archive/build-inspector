@@ -11,11 +11,11 @@ class BaseFormatter(ABC):
     MIME_TYPE = None
 
     @abstractclassmethod
-    def format_findings(cls, findings: List[ExtractedFinding]):
+    def format_findings(cls, findings: List[ExtractedFinding], errors: List[str]):
         pass
 
     @abstractclassmethod
-    def format_dependencies(cls, dependencies: List[ExtractedDependency]):
+    def format_dependencies(cls, dependencies: List[ExtractedDependency], errors: List[str]):
         pass
 
     @abstractclassmethod

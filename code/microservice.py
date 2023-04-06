@@ -1,7 +1,7 @@
 # Copyright 2020-2023 VMware, Inc.
 # SPDX-License-Identifier: BSD-2-Clause
 
-from sys import exc_info
+from parsers.base import ParserBase
 from models import (
     DocumentReport,
     ExtractedDependency,
@@ -13,6 +13,8 @@ from fastapi import FastAPI, Response, HTTPException
 from fastapi.params import Body
 from starlette.requests import Request
 from parsers import ALL_PARSERS
+from utils import timeout, TimeoutExpiredError
+from settings import Settings
 
 from formatters.base import AVAILABLE_FORMATTERS
 from formatters.json import *
@@ -32,7 +34,8 @@ microservice_api = FastAPI(
     version=APP_VERSION,
 )
 
-logger = logging.getLogger('BoMGeneratorMicroservice')
+settings = Settings.load_from_file(os.getenv('SETTINGS_FILE', "config.yml"))
+logger = logging.getLogger("uvicorn.info")
 
 
 @lru_cache
@@ -50,6 +53,9 @@ def load_finding_yara_rules():
 def load_parser_rules():
     sources = {}
     for parser in ALL_PARSERS:
+        if parser in settings.disabled_parsers:
+            logger.info(f'Not loading rule for disabled parser {parser}')
+            continue
         sources[parser] = ALL_PARSERS[parser].yara_rule
     rules = yara.compile(sources=sources)
     return rules
@@ -110,16 +116,15 @@ async def generate_findings(
         await request.body()
     )  # Have to get the request body directly to allow non-JSON body until TODO is fixed ^^^
     if type == "buildlog":
-        findings =  generate_buildlog_findings(request_body.decode())
+        findings, errors =  generate_buildlog_findings(request_body.decode())
         formatter = AVAILABLE_FORMATTERS.get(format, None)
         if not formatter:
             raise HTTPException(
             status_code=http.client.BAD_REQUEST,
             detail=f"Format {format} is invalid. Valid formats are {','.join(AVAILABLE_FORMATTERS.keys())}",
         )
-        x = formatter.format_findings(findings)
         return Response(
-            content=x,
+            content=formatter.format_findings(findings, errors),
             media_type=formatter.MIME_TYPE
             )
     else:
@@ -141,7 +146,7 @@ async def generate_dependencies(
         await request.body()
     )  # Have to get the request body directly to allow non-JSON body until TODO is fixed ^^^
     if type == "buildlog":
-        dependencies =  generate_buildlog_dependencies(request_body.decode())
+        dependencies, errors =  generate_buildlog_dependencies(request_body.decode())
         formatter = AVAILABLE_FORMATTERS.get(format, None)
         if not formatter:
             raise HTTPException(
@@ -149,7 +154,7 @@ async def generate_dependencies(
             detail=f"Format {format} is invalid. Valid formats are {','.join(AVAILABLE_FORMATTERS.keys())}",
         )
         return Response(
-            content=formatter.format_dependencies(dependencies),
+            content=formatter.format_dependencies(dependencies, errors),
             media_type=formatter.MIME_TYPE
             )
         
@@ -172,9 +177,12 @@ async def generate_report(
         await request.body()
     )  # Have to get the request body directly to allow non-JSON body until TODO is fixed ^^^
     if type == "buildlog":
+        dependencies, dep_errors = generate_buildlog_dependencies(request_body.decode())
+        findings, fin_errors = generate_buildlog_findings(request_body.decode())
         report = DocumentReport(
-            dependencies=generate_buildlog_dependencies(request_body.decode()),
-            findings=generate_buildlog_findings(request_body.decode()),
+            dependencies=dependencies,
+            findings=findings,
+            errors=dep_errors + fin_errors
         )
         formatter = AVAILABLE_FORMATTERS.get(format, None)
         if not formatter:
@@ -197,6 +205,7 @@ def generate_buildlog_findings(document: str):
     findings_rules = load_finding_yara_rules()
     parser_rules = load_parser_rules()
     findings = []
+    errors = []
     finding_matches = findings_rules.match(data=document)
     for match in finding_matches:
         for instance in match.strings:
@@ -225,13 +234,17 @@ def generate_buildlog_findings(document: str):
         parser = ALL_PARSERS[match.namespace]
         parsers_to_run.append(parser)
     for parser in set(parsers_to_run):
-        parser_instance = parser()
-        findings += parser_instance.get_document_findings(document)
-    return findings
+        try:
+            findings += get_findings_with_timeout(parser, document)
+        except TimeoutExpiredError as err:
+            logger.error(f'Parser {parser.parser_name} took too long. Skipping.')
+            errors.append(f'TimeoutParsingFindings-{parser.parser_name}')
+    return findings, errors
 
 
 def generate_buildlog_dependencies(document: str):
     dependencies = []
+    errors = []
     parser_rules = load_parser_rules()
     parser_matches = parser_rules.match(data=document)
     parsers_to_run = []
@@ -239,6 +252,21 @@ def generate_buildlog_dependencies(document: str):
         parser = ALL_PARSERS[match.namespace]
         parsers_to_run.append(parser)
     for parser in set(parsers_to_run):
-        parser_instance = parser()
-        dependencies += parser_instance.get_document_dependencies(document)
-    return dependencies
+        try:
+            dependencies += get_dependencies_with_timeout(parser, document)
+        except TimeoutExpiredError as err:
+            logger.error(f'Parser {parser.parser_name} took too long. Skipping.')
+            errors.append(f'TimeoutParsingDependencies-{parser.parser_name}')
+    return dependencies, errors
+
+@timeout(settings.parser_timeout)
+def get_dependencies_with_timeout(parser: ParserBase, document:str):
+    parser_instance = parser()
+    result = parser_instance.get_document_dependencies(document)
+    return result
+
+@timeout(settings.parser_timeout)
+def get_findings_with_timeout(parser: ParserBase, document:str):
+    parser_instance = parser()
+    result = parser_instance.get_document_findings(document)
+    return result

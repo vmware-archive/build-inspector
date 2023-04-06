@@ -55,7 +55,7 @@ class SPDXBaseFormatter(BaseFormatter):
     __TO_METHOD__ = None
 
     @classmethod
-    def format_findings(cls, findings: List[ExtractedFinding]):
+    def format_findings(cls, findings: List[ExtractedFinding], errors: List[str]):
         SPDX_document = create_base_spdx_document('LogFileSource')
         SPDX_document.package = Package(name=SPDX_document.name,spdx_id=SPDX_document.spdx_id)
         for finding in findings:
@@ -69,7 +69,7 @@ class SPDXBaseFormatter(BaseFormatter):
         return cls.__TO_METHOD__(SPDX_document)
 
     @classmethod
-    def format_dependencies(cls, dependencies: List[ExtractedDependency]):
+    def format_dependencies(cls, dependencies: List[ExtractedDependency], errors: List[str]):
         dependent_documents = []
         for dependency in dependencies:
             dep_document = create_base_spdx_document(dependency.name)
