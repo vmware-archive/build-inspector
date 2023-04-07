@@ -37,10 +37,16 @@ def mock_dependency():
     return MOCK_DEPENDENCY
 
 @fixture
-def mock_report(mock_finding, mock_dependency):
+def mock_error():
+    MOCK_ERROR = "MockError"
+    return MOCK_ERROR
+
+@fixture
+def mock_report(mock_finding, mock_dependency, mock_error):
     MOCK_REPORT = DocumentReport(
         findings = [mock_finding],
-        dependencies = [mock_dependency]
+        dependencies = [mock_dependency],
+        errors = [mock_error]
     )
     return MOCK_REPORT
 
@@ -56,9 +62,9 @@ def test_proper_inheritance():
     assert issubclass(JSONformatter, EXPECTED_BASE)
     assert issubclass(XMLformatter, EXPECTED_BASE)
 
-def test_JSON_format_findings(mock_finding):
+def test_JSON_format_findings(mock_finding, mock_error):
     # Act
-    result = SPDXJsonFormatter.format_findings([mock_finding])
+    result = SPDXJsonFormatter.format_findings([mock_finding], [mock_error])
 
     # Assert
     assert json.loads(result) # Is valid JSON data
@@ -66,9 +72,9 @@ def test_JSON_format_findings(mock_finding):
     assert isinstance(result_obj, dict) # The return is a dict object
     assert result_obj != {} # Is not blank
 
-def test_JSON_format_dependencies(mock_dependency):
+def test_JSON_format_dependencies(mock_dependency, mock_error):
     # Act
-    result = SPDXJsonFormatter.format_dependencies([mock_dependency])
+    result = SPDXJsonFormatter.format_dependencies([mock_dependency], [mock_error])
 
     # Assert
     assert json.loads(result) # Is valid JSON data
@@ -88,18 +94,18 @@ def test_JSON_format_report(mock_report):
     assert result_obj != [] # Is not blank
     assert len(result_obj) == 2 # It has 1 dependency and 1 base document
 
-def test_XML_format_findings(mock_finding):
+def test_XML_format_findings(mock_finding, mock_error):
     # Act
-    result = SPDXXMLFormatter.format_findings([mock_finding])
+    result = SPDXXMLFormatter.format_findings([mock_finding], [mock_error])
 
     # Assert
     assert xml.etree.ElementTree.fromstring(result) # is valid XML data
     result_obj = xml.etree.ElementTree.fromstring(result)
     assert result_obj.tag == "SpdxDocument"
 
-def test_XML_format_dependencies(mock_dependency):
+def test_XML_format_dependencies(mock_dependency, mock_error):
     # Act
-    result = SPDXXMLFormatter.format_dependencies([mock_dependency])
+    result = SPDXXMLFormatter.format_dependencies([mock_dependency],[mock_error])
 
     # Assert
     documents = result.split('\n---\n')

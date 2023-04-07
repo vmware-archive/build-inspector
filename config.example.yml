@@ -1,0 +1,5 @@
+## Per-parser timeout when generating findings and dependencies (Seconds)
+parser_timeout: 10
+## List of parsers to disable
+disabled_parsers:
+  - CurlParser

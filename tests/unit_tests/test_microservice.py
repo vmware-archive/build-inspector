@@ -129,8 +129,9 @@ def test_generate_findings_buildlog(
     # Arrange
     POST_DATA = "This is a buildlog"
     TYPE = "buildlog"
-    EXPECTED_RETURN = []
-    mock_generate_findings.return_value = EXPECTED_RETURN
+    FINDINGS_RETURN = ([],[])
+    mock_generate_findings.return_value = FINDINGS_RETURN
+    EXPECTED_RETURN = {'errors': [], 'findings': []}
 
     # Act
     response = test_client.post(url=f"/v1/findings?type={TYPE}", content=POST_DATA)
@@ -160,8 +161,9 @@ def test_generate_deps_buildlog(
     # Arrange
     POST_DATA = "This is a buildlog"
     TYPE = "buildlog"
-    EXPECTED_RETURN = []
-    mock_generate_deps.return_value = EXPECTED_RETURN
+    EXPECTED_RETURN = {'dependencies': [], 'errors': []}
+    DEPS_RETURN = ([],[])
+    mock_generate_deps.return_value = DEPS_RETURN
 
     # Act
     response = test_client.post(url=f"/v1/dependencies?type={TYPE}", content=POST_DATA)
@@ -194,19 +196,21 @@ def test_generate_report_buildlog(
     # Arrange
     POST_DATA = "This is a buildlog"
     TYPE = "buildlog"
-    EXPECTED_RETURN = []
-    mock_generate_deps.return_value = EXPECTED_RETURN
-    mock_generate_findings.return_value = EXPECTED_RETURN
+    EXPECTED_GENERATE_RETURNS = ([],[])
+    mock_generate_deps.return_value = EXPECTED_GENERATE_RETURNS
+    mock_generate_findings.return_value = EXPECTED_GENERATE_RETURNS
+    EXPECTED_RETURN_JSON = {
+        "dependencies": [],
+        "findings": [],
+        "errors": []
+    }
 
     # Act
     response = test_client.post(url=f"/v1/report?type={TYPE}", content=POST_DATA)
 
     # Assert
     assert response.status_code == 200
-    assert response.json() == {
-        "dependencies": EXPECTED_RETURN,
-        "findings": EXPECTED_RETURN,
-    }
+    assert response.json() == EXPECTED_RETURN_JSON
     mock_generate_deps.assert_called_once_with(POST_DATA)
     mock_generate_findings.assert_called_once_with(POST_DATA)
 
@@ -253,8 +257,9 @@ def test_generate_buildlog_findings(
     result = microservice.generate_buildlog_findings(MOCK_DOCUMENT)
 
     # Assert
-    assert isinstance(result, list)
-    assert len(result) == 2
+    assert isinstance(result, tuple)
+    assert len(result[0]) == 2
+    assert len(result[1]) == 0
     PARSER_RULES.match.assert_called_once_with(data=MOCK_DOCUMENT)
     FINDING_RULES.match.assert_called_once_with(data=MOCK_DOCUMENT)
 
@@ -277,6 +282,7 @@ def test_generate_buildlog_dependencies(mock_load_parser: mock.MagicMock):
     result = microservice.generate_buildlog_dependencies(MOCK_DOCUMENT)
 
     # Assert
-    assert isinstance(result, list)
-    assert len(result) == 1
+    assert isinstance(result, tuple)
+    assert len(result[0]) == 1
+    assert len(result[1]) == 0
     PARSER_RULES.match.assert_called_once_with(data=MOCK_DOCUMENT)

@@ -55,7 +55,7 @@ class SPDXBaseFormatter(BaseFormatter):
     __TO_METHOD__ = None
 
     @classmethod
-    def format_findings(cls, findings: List[ExtractedFinding]):
+    def format_findings(cls, findings: List[ExtractedFinding], errors: List[str]):
         SPDX_document = create_base_spdx_document('LogFileSource')
         SPDX_document.package = Package(name=SPDX_document.name,spdx_id=SPDX_document.spdx_id)
         for finding in findings:
@@ -69,7 +69,7 @@ class SPDXBaseFormatter(BaseFormatter):
         return cls.__TO_METHOD__(SPDX_document)
 
     @classmethod
-    def format_dependencies(cls, dependencies: List[ExtractedDependency]):
+    def format_dependencies(cls, dependencies: List[ExtractedDependency], errors: List[str]):
         dependent_documents = []
         for dependency in dependencies:
             dep_document = create_base_spdx_document(dependency.name)
@@ -109,8 +109,8 @@ class SPDXJsonFormatter(SPDXBaseFormatter):
     MIME_TYPE = 'application/json'
 
     @classmethod
-    def format_dependencies(cls, dependencies: List[ExtractedDependency]):
-        dependent_docs = super().format_dependencies(dependencies)
+    def format_dependencies(cls, dependencies: List[ExtractedDependency], errors: List[str]):
+        dependent_docs = super().format_dependencies(dependencies, errors)
         return_value = f"[{','.join([document_to_json(doc) for doc in dependent_docs])}]"
         return return_value
 
@@ -125,8 +125,8 @@ class SPDXXMLFormatter(SPDXBaseFormatter):
     __TO_METHOD__ = document_to_xml
 
     @classmethod
-    def format_dependencies(cls, dependencies: List[ExtractedDependency]):
-        dependent_docs = super().format_dependencies(dependencies)
+    def format_dependencies(cls, dependencies: List[ExtractedDependency], errors: List[str]):
+        dependent_docs = super().format_dependencies(dependencies, errors)
         return_value = '\n---\n'.join([document_to_xml(doc) for doc in dependent_docs])
         return return_value
 

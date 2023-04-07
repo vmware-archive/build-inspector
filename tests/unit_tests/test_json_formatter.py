@@ -30,16 +30,21 @@ def test_format_findings():
         severity = FindingSeverity.INFORMATIONAL,
         category = "MOCK CATEGORY"
     )
+    MOCK_ERRORS = "MockError"
 
     # Act
-    result = JsonFormatter.format_findings([MOCK_FINDING])
+    result = JsonFormatter.format_findings([MOCK_FINDING], [MOCK_ERRORS])
 
     # Assert
     assert json.loads(result) # Is valid JSON data
     result_obj = json.loads(result)
-    assert isinstance(result_obj, list) # The return is a list
-    assert result_obj != [] # Is not blank
-    assert len(result_obj) == 1 # It has 1 finding
+    assert isinstance(result_obj, dict) # The return is a dictionary
+    assert result_obj != {} # Is not blank
+    assert len(result_obj.keys()) == 2 # It has 2 keys
+    assert "findings" in result_obj.keys()
+    assert len(result_obj['findings']) == 1
+    assert "errors" in result_obj.keys()
+    assert len(result_obj['errors']) == 1
 
 def test_format_dependencies():
     # Arrange
@@ -51,13 +56,18 @@ def test_format_dependencies():
         extraction_source = "MOCK SOURCE",
         download_location = "MOCK LOCATION"
     )
+    MOCK_ERRORS = "MockError"
 
     # Act
-    result = JsonFormatter.format_dependencies([MOCK_DEPENDENCY])
+    result = JsonFormatter.format_dependencies([MOCK_DEPENDENCY], [MOCK_ERRORS])
 
     # Assert
     assert json.loads(result) # Is valid JSON data
     result_obj = json.loads(result)
-    assert isinstance(result_obj, list) # The return is a list
-    assert result_obj != [] # Is not blank
-    assert len(result_obj) == 1 # It has 1 dependency
+    assert isinstance(result_obj, dict) # The return is a dictionary
+    assert result_obj != {} # Is not blank
+    assert len(result_obj.keys()) == 2 # It has 2 keys
+    assert "dependencies" in result_obj.keys()
+    assert len(result_obj['dependencies']) == 1
+    assert "errors" in result_obj.keys()
+    assert len(result_obj['errors']) == 1

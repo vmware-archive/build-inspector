@@ -40,3 +40,4 @@ class ExtractedFinding(BaseModel):
 class DocumentReport(BaseModel):
     findings: List[ExtractedFinding]
     dependencies: List[ExtractedDependency]
+    errors: List[str]
