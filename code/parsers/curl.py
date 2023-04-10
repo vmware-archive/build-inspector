@@ -40,15 +40,18 @@ class CurlParser(ParserBase):
         curl_dependencies = self.curl_extractor_regex.findall(document)
         for match in curl_dependencies:
             curl_extraction_source = match[0]
-            url_extract = self.url_extractor_regex.findall(curl_extraction_source)[0].strip()
-            name_extract = self.name_extractor_regex.sub('', url_extract)
+            url_extract = self.url_extractor_regex.findall(curl_extraction_source)
+            download_location = url_extract[0].strip() if url_extract else None
+            if download_location is None:
+                continue
+            name_extract = self.name_extractor_regex.sub('', download_location)
             dependencies.append(
                 ExtractedDependency(
                     name=name_extract,
                     version="Unknown",
                     type="curl",
                     extraction_source=curl_extraction_source,
-                    download_location=url_extract,
+                    download_location=download_location,
                     result=DependencyRelation.CONSUMED,
                 )
             )
