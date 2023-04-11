@@ -30,7 +30,7 @@ class CurlParser(ParserBase):
     )
 
     def on_load(self) -> None:
-        self.curl_extractor_regex = re.compile(r'(curl(?: -[^ \t]+)* (\S+)(?:(?: https?|www\.|ftp:)\S+)*.*)')
+        self.curl_extractor_regex = re.compile(r'(curl(?: -[^ \t]+)* (\S+)(?:(?: https?|www\.|ftp:)\S+)*.(?:(?!curl).)*)')
         self.url_extractor_regex = re.compile(r"(https?:\S+[^'\"]|www\.\S+[^'\"]|ftp:\S+[^'\"])")
         self.name_extractor_regex = re.compile(r"https?://|(www\.)|ftp://?")
 
