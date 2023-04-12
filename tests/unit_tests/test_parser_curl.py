@@ -17,7 +17,8 @@ def test_yara_rule():
         "curl https://httpstat.us/400 -f",
         "curl http://executable.sh | bash",
         "curl ftp://user@host/foo/bar.txt",
-        "curl www.helloworld.com > test.file"
+        "curl www.helloworld.com > test.file",
+        "curl -X 'GET' 'http://localhost:8000' -H 'application/json'"
     ]
     NEGATIVE_TEST_STRINGS = [
         "#6 [resource  3/23] RUN apt install -y --no-install-recommends     curl     gnupg     gzip",
@@ -51,6 +52,8 @@ def test_get_document_dependencies():
     8 [resource  5/23] RUN curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash
 
     6 [resource  3/23] RUN apt install -y --no-install-recommends     curl     gnupg     gzip     jq     openssl     libssl-dev     make     g++     openssh-client     libstdc++6     software-properties-common
+    
+    curl -X 'GET' 'http://localhost:8000' -H 'application/json'
     """
 
     expected_output = [
@@ -67,7 +70,7 @@ def test_get_document_dependencies():
             version='Unknown',
             type='curl',
             result=DependencyRelation.CONSUMED,
-            extraction_source='curl https://httpstat.us/400',
+            extraction_source='curl https://httpstat.us/400 -f',
             download_location='https://httpstat.us/400'
         ),
         ExtractedDependency(
@@ -75,7 +78,7 @@ def test_get_document_dependencies():
             version='Unknown',
             type='curl',
             result=DependencyRelation.CONSUMED,
-            extraction_source='curl http://executable.sh',
+            extraction_source='curl http://executable.sh | bash',
             download_location='http://executable.sh'
         ),
         ExtractedDependency(
@@ -91,7 +94,7 @@ def test_get_document_dependencies():
             version='Unknown',
             type='curl',
             result=DependencyRelation.CONSUMED,
-            extraction_source='curl www.helloworld.com',
+            extraction_source='curl www.helloworld.com > test.file',
             download_location='www.helloworld.com'
         ),
         ExtractedDependency(
@@ -99,8 +102,16 @@ def test_get_document_dependencies():
             version='Unknown',
             type='curl',
             result=DependencyRelation.CONSUMED,
-            extraction_source='RUN curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh',
+            extraction_source='curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash',
             download_location='https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh'
+        ),
+        ExtractedDependency(
+            name="localhost:8000'",
+            version='Unknown',
+            type='curl',
+            result=DependencyRelation.CONSUMED,
+            extraction_source="curl -X 'GET' 'http://localhost:8000' -H 'application/json'",
+            download_location="http://localhost:8000'"
         )
     ]
 

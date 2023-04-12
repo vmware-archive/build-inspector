@@ -30,7 +30,7 @@ class CurlParser(ParserBase):
     )
 
     def on_load(self) -> None:
-        self.curl_extractor_regex = re.compile(r'((?:\S+[ \t])?curl (-.*)?(\S+)?(https?:\S+|www\.\S+|ftp:\S+(.*)))')
+        self.curl_extractor_regex = re.compile(r'(curl(?: -[^ \t]+)* (\S+)(?:(?: https?|www\.|ftp:)\S+)*.(?:(?!curl).)*)')
         self.url_extractor_regex = re.compile(r"(https?:\S+[^'\"]|www\.\S+[^'\"]|ftp:\S+[^'\"])")
         self.name_extractor_regex = re.compile(r"https?://|(www\.)|ftp://?")
 
@@ -39,15 +39,19 @@ class CurlParser(ParserBase):
         dependencies = []
         curl_dependencies = self.curl_extractor_regex.findall(document)
         for match in curl_dependencies:
-            url_extract = self.url_extractor_regex.findall(match[3])[0]
-            name_extract = self.name_extractor_regex.sub('', url_extract)
+            curl_extraction_source = match[0]
+            url_extract = self.url_extractor_regex.findall(curl_extraction_source)
+            download_location = url_extract[0].strip() if url_extract else None
+            if download_location is None:
+                continue
+            name_extract = self.name_extractor_regex.sub('', download_location)
             dependencies.append(
                 ExtractedDependency(
                     name=name_extract,
                     version="Unknown",
                     type="curl",
-                    extraction_source=match[0],
-                    download_location=url_extract,
+                    extraction_source=curl_extraction_source,
+                    download_location=download_location,
                     result=DependencyRelation.CONSUMED,
                 )
             )
