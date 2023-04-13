@@ -1,12 +1,19 @@
 # Copyright 2023 VMware, Inc.
 # SPDX-License-Identifier: BSD-2
 
+import sys
+import os
+import threading
+
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "..", "code"))
+
 from argparse import ArgumentParser
 import os
 import sys
 import logging
 import urllib.parse
-import requests
+from fastapi.testclient import TestClient
+from microservice import microservice_api
 from typing import List
 from pydantic import parse
 from pydantic_yaml import YamlModel, main
@@ -68,6 +75,7 @@ class FunctionalTestRunner():
         self.failed_test_count = 0
         self.passed_test_count = 0
         self.logger = logging.getLogger("FunctionalTestRunner")
+        self.api_client = TestClient(microservice_api)
         self.load_test_cases()
     
     def load_test_cases(self):
@@ -102,9 +110,9 @@ class FunctionalTestRunner():
 
     def send_test_to_API(self, test_config):
         body = test_config.config.input_data
-        url = urllib.parse.urljoin(self.config.url, self.API_REPORT_PATH)
+        url = self.API_REPORT_PATH
         try:
-            response = requests.post(url=url,data=body.encode('utf-8'))
+            response = self.api_client.post(url=url,data=body.encode('utf-8'))
             if response.status_code == 200:
                 return response.json()
             else:
@@ -155,7 +163,7 @@ class FunctionalTestRunner():
             for dependency in test_config.config.expected_dependencies:
                 found = self.check_dependency(dependency, API_result)
                 if not found:
-                    self.logger.debug(f'Incorrect result for test {test_config.name}. Test Failed!')
+                    self.logger.info(f'Incorrect result for test {test_config.name}. Test Failed!\nExpected: {dependency} \nGot {API_result["dependencies"]}')
                     self.failed_test_count += 1
                     self.failures.append((test_config,f'Expected dependency does not match results. {dependency}'))
                     success = False
