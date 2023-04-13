@@ -17,6 +17,7 @@ from microservice import microservice_api
 from typing import List
 from pydantic import parse
 from pydantic_yaml import YamlModel, main
+import time
 
 class FindingConfig(YamlModel):
     source: str
@@ -57,6 +58,8 @@ def parse_arguments():
     parser.add_argument("--debug", action="store_true")
     parser.add_argument("--configs","-c",help="Location of the test configurations directory", default=os.path.dirname(os.path.realpath(__file__)) + "/test_configs/")
     parser.add_argument("--url","-u",help="Base URL for API testing",default="http://localhost:8080/")
+    parser.add_argument("--max-time", "-t", help="Time in ms to use as a max time a single response is allowed to take", type=int, default=1000)
+
     config = parser.parse_args()
     return config
 
@@ -104,8 +107,14 @@ class FunctionalTestRunner():
     
     def run_one_test(self, test_config):
         self.logger.debug(f'Starting test {test_config.name}')
+        start_time = time.monotonic()
         API_result = self.send_test_to_API(test_config)
+        time_taken = time.monotonic() - start_time
         success = self.check_test_result(test_config, API_result)
+        if time_taken > self.config.max_time/1000:
+            success = False
+            self.failed_test_count += 1
+            self.failures.append((test_config,f'Test {test_config.name} took {int(time_taken*1000)}ms. Exceeded max of {self.config.max_time}ms.'))
         return success
 
     def send_test_to_API(self, test_config):
