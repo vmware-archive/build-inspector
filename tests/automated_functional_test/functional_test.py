@@ -1,15 +1,23 @@
 # Copyright 2023 VMware, Inc.
 # SPDX-License-Identifier: BSD-2
 
+import sys
+import os
+import threading
+
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "..", "code"))
+
 from argparse import ArgumentParser
 import os
 import sys
 import logging
 import urllib.parse
-import requests
+from fastapi.testclient import TestClient
+from microservice import microservice_api
 from typing import List
 from pydantic import parse
 from pydantic_yaml import YamlModel, main
+import time
 
 class FindingConfig(YamlModel):
     source: str
@@ -50,6 +58,8 @@ def parse_arguments():
     parser.add_argument("--debug", action="store_true")
     parser.add_argument("--configs","-c",help="Location of the test configurations directory", default=os.path.dirname(os.path.realpath(__file__)) + "/test_configs/")
     parser.add_argument("--url","-u",help="Base URL for API testing",default="http://localhost:8080/")
+    parser.add_argument("--max-time", "-t", help="Time in ms to use as a max time a single response is allowed to take", type=int, default=1000)
+
     config = parser.parse_args()
     return config
 
@@ -68,6 +78,7 @@ class FunctionalTestRunner():
         self.failed_test_count = 0
         self.passed_test_count = 0
         self.logger = logging.getLogger("FunctionalTestRunner")
+        self.api_client = TestClient(microservice_api)
         self.load_test_cases()
     
     def load_test_cases(self):
@@ -96,15 +107,21 @@ class FunctionalTestRunner():
     
     def run_one_test(self, test_config):
         self.logger.debug(f'Starting test {test_config.name}')
+        start_time = time.monotonic()
         API_result = self.send_test_to_API(test_config)
+        time_taken = time.monotonic() - start_time
         success = self.check_test_result(test_config, API_result)
+        if time_taken > self.config.max_time/1000:
+            success = False
+            self.failed_test_count += 1
+            self.failures.append((test_config,f'Test {test_config.name} took {int(time_taken*1000)}ms. Exceeded max of {self.config.max_time}ms.'))
         return success
 
     def send_test_to_API(self, test_config):
         body = test_config.config.input_data
-        url = urllib.parse.urljoin(self.config.url, self.API_REPORT_PATH)
+        url = self.API_REPORT_PATH
         try:
-            response = requests.post(url=url,data=body.encode('utf-8'))
+            response = self.api_client.post(url=url,data=body.encode('utf-8'))
             if response.status_code == 200:
                 return response.json()
             else:
@@ -155,7 +172,7 @@ class FunctionalTestRunner():
             for dependency in test_config.config.expected_dependencies:
                 found = self.check_dependency(dependency, API_result)
                 if not found:
-                    self.logger.debug(f'Incorrect result for test {test_config.name}. Test Failed!')
+                    self.logger.info(f'Incorrect result for test {test_config.name}. Test Failed!\nExpected: {dependency} \nGot {API_result["dependencies"]}')
                     self.failed_test_count += 1
                     self.failures.append((test_config,f'Expected dependency does not match results. {dependency}'))
                     success = False
