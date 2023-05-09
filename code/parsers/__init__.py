@@ -12,6 +12,7 @@ from parsers.curl import CurlParser
 from parsers.goget import GoGetParser
 from parsers.maven import MavenParser
 from parsers.nuget import NuGetParser
+from parsers.dnf import DNFParser
 
 # TODO: Figure out dynamic loading of parsers
 ALL_PARSERS = {
@@ -25,5 +26,6 @@ ALL_PARSERS = {
     "CurlParser": CurlParser,
     "GoGetParser": GoGetParser,
     "MavenParser": MavenParser,
-    "NuGetParser": NuGetParser
+    "NuGetParser": NuGetParser,
+    "DNFParser": DNFParser
 }

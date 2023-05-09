@@ -1,0 +1,1239 @@
+# Copyright 2020-2023 VMware, Inc.
+# SPDX-License-Identifier: BSD-2-Clause
+
+name: dnf
+description: Test for the dnf dependency extractor
+config:
+  input_data: |
+    root@02424c6b934f:/# dnf install go
+    Last metadata expiration check: 0:01:44 ago on Mon Feb 13 11:10:09 2023.
+    Dependencies resolved.
+    ==========================================================================================================================================================================================================================
+     Package                                                        Architecture                               Version                                                      Repository                                   Size
+    ==========================================================================================================================================================================================================================
+    Installing:
+     golang                                                         x86_64                                     1.19.5-1.fc37                                                updates                                     579 k
+    Installing dependencies:
+     apr                                                            x86_64                                     1.7.2-2.fc37                                                 updates                                     127 k
+     apr-util                                                       x86_64                                     1.6.3-2.fc37                                                 updates                                      96 k
+     binutils                                                       x86_64                                     2.38-25.fc37                                                 updates                                     5.4 M
+     binutils-gold                                                  x86_64                                     2.38-25.fc37                                                 updates                                     775 k
+     cpp                                                            x86_64                                     12.2.1-4.fc37                                                updates                                      11 M
+     dbus                                                           x86_64                                     1:1.14.6-1.fc37                                              updates                                     7.7 k
+     dbus-broker                                                    x86_64                                     33-1.fc37                                                    updates                                     174 k
+     dbus-common                                                    noarch                                     1:1.14.6-1.fc37                                              updates                                      15 k
+     device-mapper                                                  x86_64                                     1.02.175-9.fc37                                              fedora                                      138 k
+     device-mapper-libs                                             x86_64                                     1.02.175-9.fc37                                              fedora                                      177 k
+     elfutils-debuginfod-client                                     x86_64                                     0.188-3.fc37                                                 updates                                      40 k
+     emacs-filesystem                                               noarch                                     1:28.2-3.fc37                                                updates                                     7.5 k
+     gc                                                             x86_64                                     8.0.6-4.fc37                                                 fedora                                      103 k
+     gcc                                                            x86_64                                     12.2.1-4.fc37                                                updates                                      33 M
+     git-core                                                       x86_64                                     2.39.1-1.fc37                                                updates                                     4.2 M
+     git-core-doc                                                   noarch                                     2.39.1-1.fc37                                                updates                                     2.8 M
+     glibc-devel                                                    x86_64                                     2.36-9.fc37                                                  updates                                     102 k
+     glibc-headers-x86                                              noarch                                     2.36-9.fc37                                                  updates                                     581 k
+     golang-bin                                                     x86_64                                     1.19.5-1.fc37                                                updates                                      98 M
+     golang-src                                                     noarch                                     1.19.5-1.fc37                                                updates                                      12 M
+     groff-base                                                     x86_64                                     1.22.4-10.fc37                                               fedora                                      1.1 M
+     guile22                                                        x86_64                                     2.2.7-6.fc37                                                 fedora                                      6.5 M
+     kernel-headers                                                 x86_64                                     6.1.5-200.fc37                                               updates                                     1.5 M
+     kmod-libs                                                      x86_64                                     30-2.fc37                                                    fedora                                       68 k
+     less                                                           x86_64                                     590-5.fc37                                                   fedora                                      160 k
+     libargon2                                                      x86_64                                     20190702-1.fc37                                              fedora                                       28 k
+     libcbor                                                        x86_64                                     0.7.0-7.fc37                                                 fedora                                       56 k
+     libedit                                                        x86_64                                     3.1-43.20221009cvs.fc37                                      updates                                     106 k
+     libfdisk                                                       x86_64                                     2.38.1-1.fc37                                                fedora                                      160 k
+     libfido2                                                       x86_64                                     1.11.0-3.fc37                                                fedora                                       97 k
+     libmpc                                                         x86_64                                     1.2.1-5.fc37                                                 fedora                                       61 k
+     libpkgconf                                                     x86_64                                     1.8.0-3.fc37                                                 fedora                                       36 k
+     libseccomp                                                     x86_64                                     2.5.3-3.fc37                                                 fedora                                       70 k
+     libserf                                                        x86_64                                     1.3.9-24.fc37                                                fedora                                       59 k
+     libtool-ltdl                                                   x86_64                                     2.4.7-2.fc37                                                 fedora                                       37 k
+     libutempter                                                    x86_64                                     1.2.1-7.fc37                                                 fedora                                       26 k
+     libxcrypt-devel                                                x86_64                                     4.4.33-4.fc37                                                updates                                      30 k
+     make                                                           x86_64                                     1:4.3-11.fc37                                                fedora                                      542 k
+     ncurses                                                        x86_64                                     6.3-4.20220501.fc37                                          updates                                     409 k
+     openssh                                                        x86_64                                     8.8p1-7.fc37                                                 fedora                                      452 k
+     openssh-clients                                                x86_64                                     8.8p1-7.fc37                                                 fedora                                      698 k
+     perl-AutoLoader                                                noarch                                     5.74-492.fc37                                                fedora                                       24 k
+     perl-B                                                         x86_64                                     1.83-492.fc37                                                fedora                                      184 k
+     perl-Carp                                                      noarch                                     1.52-489.fc37                                                fedora                                       29 k
+     perl-Class-Struct                                              noarch                                     0.66-492.fc37                                                fedora                                       25 k
+     perl-Data-Dumper                                               x86_64                                     2.184-490.fc37                                               fedora                                       56 k
+     perl-Digest                                                    noarch                                     1.20-489.fc37                                                fedora                                       26 k
+     perl-Digest-MD5                                                x86_64                                     2.58-489.fc37                                                fedora                                       36 k
+     perl-DynaLoader                                                x86_64                                     1.52-492.fc37                                                fedora                                       29 k
+     perl-Encode                                                    x86_64                                     4:3.19-492.fc37                                              fedora                                      1.7 M
+     perl-Errno                                                     x86_64                                     1.36-492.fc37                                                fedora                                       18 k
+     perl-Error                                                     noarch                                     1:0.17029-10.fc37                                            fedora                                       41 k
+     perl-Exporter                                                  noarch                                     5.77-489.fc37                                                fedora                                       31 k
+     perl-Fcntl                                                     x86_64                                     1.15-492.fc37                                                fedora                                       24 k
+     perl-File-Basename                                             noarch                                     2.85-492.fc37                                                fedora                                       20 k
+     perl-File-Find                                                 noarch                                     1.40-492.fc37                                                fedora                                       28 k
+     perl-File-Path                                                 noarch                                     2.18-489.fc37                                                fedora                                       35 k
+     perl-File-Temp                                                 noarch                                     1:0.231.100-489.fc37                                         fedora                                       59 k
+     perl-File-stat                                                 noarch                                     1.12-492.fc37                                                fedora                                       20 k
+     perl-FileHandle                                                noarch                                     2.03-492.fc37                                                fedora                                       19 k
+     perl-Getopt-Long                                               noarch                                     1:2.54-1.fc37                                                updates                                      60 k
+     perl-Getopt-Std                                                noarch                                     1.13-492.fc37                                                fedora                                       19 k
+     perl-Git                                                       noarch                                     2.39.1-1.fc37                                                updates                                      43 k
+     perl-HTTP-Tiny                                                 noarch                                     0.082-1.fc37                                                 fedora                                       55 k
+     perl-IO                                                        x86_64                                     1.50-492.fc37                                                fedora                                       95 k
+     perl-IPC-Open3                                                 noarch                                     1.22-492.fc37                                                fedora                                       26 k
+     perl-MIME-Base64                                               x86_64                                     3.16-489.fc37                                                fedora                                       30 k
+     perl-Net-SSLeay                                                x86_64                                     1.92-4.fc37                                                  fedora                                      362 k
+     perl-POSIX                                                     x86_64                                     2.03-492.fc37                                                fedora                                      101 k
+     perl-PathTools                                                 x86_64                                     3.84-489.fc37                                                fedora                                       89 k
+     perl-Pod-Escapes                                               noarch                                     1:1.07-489.fc37                                              fedora                                       20 k
+     perl-Pod-Perldoc                                               noarch                                     3.28.01-490.fc37                                             fedora                                       90 k
+     perl-Pod-Simple                                                noarch                                     1:3.43-490.fc37                                              fedora                                      225 k
+     perl-Pod-Usage                                                 noarch                                     4:2.03-3.fc37                                                fedora                                       40 k
+     perl-Scalar-List-Utils                                         x86_64                                     5:1.63-489.fc37                                              fedora                                       72 k
+     perl-SelectSaver                                               noarch                                     1.02-492.fc37                                                fedora                                       15 k
+     perl-Socket                                                    x86_64                                     4:2.036-1.fc37                                               fedora                                       55 k
+     perl-Storable                                                  x86_64                                     1:3.26-489.fc37                                              fedora                                       97 k
+     perl-Symbol                                                    noarch                                     1.09-492.fc37                                                fedora                                       17 k
+     perl-Term-ANSIColor                                            noarch                                     5.01-490.fc37                                                fedora                                       48 k
+     perl-Term-Cap                                                  noarch                                     1.17-489.fc37                                                fedora                                       22 k
+     perl-TermReadKey                                               x86_64                                     2.38-14.fc37                                                 fedora                                       36 k
+     perl-Text-ParseWords                                           noarch                                     3.31-489.fc37                                                fedora                                       16 k
+     perl-Text-Tabs+Wrap                                            noarch                                     2021.0814-489.fc37                                           fedora                                       22 k
+     perl-Time-Local                                                noarch                                     2:1.300-489.fc37                                             fedora                                       33 k
+     perl-URI                                                       noarch                                     5.17-1.fc37                                                  updates                                     123 k
+     perl-base                                                      noarch                                     2.27-492.fc37                                                fedora                                       19 k
+     perl-constant                                                  noarch                                     1.33-490.fc37                                                fedora                                       23 k
+     perl-if                                                        noarch                                     0.61.000-492.fc37                                            fedora                                       17 k
+     perl-interpreter                                               x86_64                                     4:5.36.0-492.fc37                                            fedora                                       75 k
+     perl-lib                                                       x86_64                                     0.65-492.fc37                                                fedora                                       18 k
+     perl-libnet                                                    noarch                                     3.14-490.fc37                                                fedora                                      132 k
+     perl-libs                                                      x86_64                                     4:5.36.0-492.fc37                                            fedora                                      2.2 M
+     perl-mro                                                       x86_64                                     1.26-492.fc37                                                fedora                                       32 k
+     perl-overload                                                  noarch                                     1.35-492.fc37                                                fedora                                       49 k
+     perl-overloading                                               noarch                                     0.02-492.fc37                                                fedora                                       16 k
+     perl-parent                                                    noarch                                     1:0.238-489.fc37                                             fedora                                       14 k
+     perl-podlators                                                 noarch                                     1:4.14-489.fc37                                              fedora                                      116 k
+     perl-subs                                                      noarch                                     1.04-492.fc37                                                fedora                                       15 k
+     perl-vars                                                      noarch                                     1.05-492.fc37                                                fedora                                       16 k
+     pkgconf                                                        x86_64                                     1.8.0-3.fc37                                                 fedora                                       41 k
+     pkgconf-m4                                                     noarch                                     1.8.0-3.fc37                                                 fedora                                       14 k
+     pkgconf-pkg-config                                             x86_64                                     1.8.0-3.fc37                                                 fedora                                       10 k
+     re2                                                            x86_64                                     1:20211101-3.fc36                                            fedora                                      196 k
+     subversion-libs                                                x86_64                                     1.14.2-8.fc37                                                updates                                     1.5 M
+     systemd                                                        x86_64                                     251.11-2.fc37                                                updates                                     4.2 M
+     systemd-pam                                                    x86_64                                     251.11-2.fc37                                                updates                                     334 k
+     utf8proc                                                       x86_64                                     2.7.0-3.fc37                                                 fedora                                       80 k
+     util-linux                                                     x86_64                                     2.38.1-1.fc37                                                fedora                                      2.3 M
+     xkeyboard-config                                               noarch                                     2.36-3.fc37                                                  updates                                     957 k
+    Installing weak dependencies:
+     apr-util-bdb                                                   x86_64                                     1.6.3-2.fc37                                                 updates                                      13 k
+     apr-util-openssl                                               x86_64                                     1.6.3-2.fc37                                                 updates                                      15 k
+     cryptsetup-libs                                                x86_64                                     2.5.0-1.fc37                                                 fedora                                      454 k
+     diffutils                                                      x86_64                                     3.8-3.fc37                                                   fedora                                      378 k
+     git                                                            x86_64                                     2.39.1-1.fc37                                                updates                                      66 k
+     libbpf                                                         x86_64                                     2:0.8.0-2.fc37                                               fedora                                      172 k
+     libxkbcommon                                                   x86_64                                     1.4.1-2.fc37                                                 fedora                                      140 k
+     mercurial                                                      x86_64                                     6.2.3-1.fc37                                                 updates                                     6.4 M
+     perl-IO-Socket-IP                                              noarch                                     0.41-490.fc37                                                fedora                                       42 k
+     perl-IO-Socket-SSL                                             noarch                                     2.075-1.fc37                                                 fedora                                      221 k
+     perl-Mozilla-CA                                                noarch                                     20211001-4.fc37                                              fedora                                       12 k
+     perl-NDBM_File                                                 x86_64                                     1.15-492.fc37                                                fedora                                       25 k
+     python3-fb-re2                                                 x86_64                                     1.0.7-10.fc37                                                fedora                                       24 k
+     qrencode-libs                                                  x86_64                                     4.1.1-3.fc37                                                 fedora                                       61 k
+     subversion                                                     x86_64                                     1.14.2-8.fc37                                                updates                                     1.0 M
+     systemd-networkd                                               x86_64                                     251.11-2.fc37                                                updates                                     616 k
+     systemd-resolved                                               x86_64                                     251.11-2.fc37                                                updates                                     281 k
+
+    Transaction Summary
+    ==========================================================================================================================================================================================================================
+    Install  128 Packages
+
+    Total download size: 207 M
+    Installed size: 798 M
+    Is this ok [y/N]: y
+    Downloading Packages:
+    (1/128): device-mapper-1.02.175-9.fc37.x86_64.rpm                                                                                                                                         205 kB/s | 138 kB     00:00
+    (2/128): device-mapper-libs-1.02.175-9.fc37.x86_64.rpm                                                                                                                                    245 kB/s | 177 kB     00:00
+    (3/128): cryptsetup-libs-2.5.0-1.fc37.x86_64.rpm                                                                                                                                          589 kB/s | 454 kB     00:00
+    (4/128): gc-8.0.6-4.fc37.x86_64.rpm                                                                                                                                                       855 kB/s | 103 kB     00:00
+    (5/128): diffutils-3.8-3.fc37.x86_64.rpm                                                                                                                                                  1.5 MB/s | 378 kB     00:00
+    (6/128): groff-base-1.22.4-10.fc37.x86_64.rpm                                                                                                                                             4.4 MB/s | 1.1 MB     00:00
+    (7/128): kmod-libs-30-2.fc37.x86_64.rpm                                                                                                                                                   691 kB/s |  68 kB     00:00
+    (8/128): less-590-5.fc37.x86_64.rpm                                                                                                                                                       1.7 MB/s | 160 kB     00:00
+    (9/128): libargon2-20190702-1.fc37.x86_64.rpm                                                                                                                                             304 kB/s |  28 kB     00:00
+    (10/128): libbpf-0.8.0-2.fc37.x86_64.rpm                                                                                                                                                  1.8 MB/s | 172 kB     00:00
+    (11/128): libcbor-0.7.0-7.fc37.x86_64.rpm                                                                                                                                                 587 kB/s |  56 kB     00:00
+    (12/128): libfdisk-2.38.1-1.fc37.x86_64.rpm                                                                                                                                               1.6 MB/s | 160 kB     00:00
+    (13/128): libfido2-1.11.0-3.fc37.x86_64.rpm                                                                                                                                               963 kB/s |  97 kB     00:00
+    (14/128): guile22-2.2.7-6.fc37.x86_64.rpm                                                                                                                                                  12 MB/s | 6.5 MB     00:00
+    (15/128): libpkgconf-1.8.0-3.fc37.x86_64.rpm                                                                                                                                              354 kB/s |  36 kB     00:00
+    (16/128): libmpc-1.2.1-5.fc37.x86_64.rpm                                                                                                                                                  517 kB/s |  61 kB     00:00
+    (17/128): libseccomp-2.5.3-3.fc37.x86_64.rpm                                                                                                                                              800 kB/s |  70 kB     00:00
+    (18/128): libserf-1.3.9-24.fc37.x86_64.rpm                                                                                                                                                656 kB/s |  59 kB     00:00
+    (19/128): libtool-ltdl-2.4.7-2.fc37.x86_64.rpm                                                                                                                                            397 kB/s |  37 kB     00:00
+    (20/128): libutempter-1.2.1-7.fc37.x86_64.rpm                                                                                                                                             293 kB/s |  26 kB     00:00
+    (21/128): libxkbcommon-1.4.1-2.fc37.x86_64.rpm                                                                                                                                            1.5 MB/s | 140 kB     00:00
+    (22/128): openssh-8.8p1-7.fc37.x86_64.rpm                                                                                                                                                 4.7 MB/s | 452 kB     00:00
+    (23/128): make-4.3-11.fc37.x86_64.rpm                                                                                                                                                     3.0 MB/s | 542 kB     00:00
+    (24/128): openssh-clients-8.8p1-7.fc37.x86_64.rpm                                                                                                                                         5.4 MB/s | 698 kB     00:00
+    (25/128): perl-AutoLoader-5.74-492.fc37.noarch.rpm                                                                                                                                        276 kB/s |  24 kB     00:00
+    (26/128): perl-B-1.83-492.fc37.x86_64.rpm                                                                                                                                                 1.8 MB/s | 184 kB     00:00
+    (27/128): perl-Carp-1.52-489.fc37.noarch.rpm                                                                                                                                              331 kB/s |  29 kB     00:00
+    (28/128): perl-Class-Struct-0.66-492.fc37.noarch.rpm                                                                                                                                      284 kB/s |  25 kB     00:00
+    (29/128): perl-Data-Dumper-2.184-490.fc37.x86_64.rpm                                                                                                                                      628 kB/s |  56 kB     00:00
+    (30/128): perl-Digest-1.20-489.fc37.noarch.rpm                                                                                                                                            292 kB/s |  26 kB     00:00
+    (31/128): perl-Digest-MD5-2.58-489.fc37.x86_64.rpm                                                                                                                                        405 kB/s |  36 kB     00:00
+    (32/128): perl-DynaLoader-1.52-492.fc37.x86_64.rpm                                                                                                                                        328 kB/s |  29 kB     00:00
+    (33/128): perl-Errno-1.36-492.fc37.x86_64.rpm                                                                                                                                             203 kB/s |  18 kB     00:00
+    (34/128): perl-Error-0.17029-10.fc37.noarch.rpm                                                                                                                                           459 kB/s |  41 kB     00:00
+    (35/128): perl-Encode-3.19-492.fc37.x86_64.rpm                                                                                                                                            8.1 MB/s | 1.7 MB     00:00
+    (36/128): perl-Exporter-5.77-489.fc37.noarch.rpm                                                                                                                                          355 kB/s |  31 kB     00:00
+    (37/128): perl-Fcntl-1.15-492.fc37.x86_64.rpm                                                                                                                                             267 kB/s |  24 kB     00:00
+    (38/128): perl-File-Basename-2.85-492.fc37.noarch.rpm                                                                                                                                     231 kB/s |  20 kB     00:00
+    (39/128): perl-File-Find-1.40-492.fc37.noarch.rpm                                                                                                                                         321 kB/s |  28 kB     00:00
+    (40/128): perl-File-Path-2.18-489.fc37.noarch.rpm                                                                                                                                         399 kB/s |  35 kB     00:00
+    (41/128): perl-File-Temp-0.231.100-489.fc37.noarch.rpm                                                                                                                                    668 kB/s |  59 kB     00:00
+    (42/128): perl-File-stat-1.12-492.fc37.noarch.rpm                                                                                                                                         230 kB/s |  20 kB     00:00
+    (43/128): perl-FileHandle-2.03-492.fc37.noarch.rpm                                                                                                                                        210 kB/s |  19 kB     00:00
+    (44/128): perl-Getopt-Std-1.13-492.fc37.noarch.rpm                                                                                                                                        213 kB/s |  19 kB     00:00
+    (45/128): perl-HTTP-Tiny-0.082-1.fc37.noarch.rpm                                                                                                                                          625 kB/s |  55 kB     00:00
+    (46/128): perl-IO-1.50-492.fc37.x86_64.rpm                                                                                                                                                1.0 MB/s |  95 kB     00:00
+    (47/128): perl-IO-Socket-IP-0.41-490.fc37.noarch.rpm                                                                                                                                      476 kB/s |  42 kB     00:00
+    (48/128): perl-IO-Socket-SSL-2.075-1.fc37.noarch.rpm                                                                                                                                      2.4 MB/s | 221 kB     00:00
+    (49/128): perl-IPC-Open3-1.22-492.fc37.noarch.rpm                                                                                                                                         294 kB/s |  26 kB     00:00
+    (50/128): perl-MIME-Base64-3.16-489.fc37.x86_64.rpm                                                                                                                                       342 kB/s |  30 kB     00:00
+    (51/128): perl-Mozilla-CA-20211001-4.fc37.noarch.rpm                                                                                                                                      124 kB/s |  12 kB     00:00
+    (52/128): perl-NDBM_File-1.15-492.fc37.x86_64.rpm                                                                                                                                         287 kB/s |  25 kB     00:00
+    (53/128): perl-Net-SSLeay-1.92-4.fc37.x86_64.rpm                                                                                                                                          3.6 MB/s | 362 kB     00:00
+    (54/128): perl-POSIX-2.03-492.fc37.x86_64.rpm                                                                                                                                             1.1 MB/s | 101 kB     00:00
+    (55/128): perl-PathTools-3.84-489.fc37.x86_64.rpm                                                                                                                                         967 kB/s |  89 kB     00:00
+    (56/128): perl-Pod-Escapes-1.07-489.fc37.noarch.rpm                                                                                                                                       226 kB/s |  20 kB     00:00
+    (57/128): perl-Pod-Perldoc-3.28.01-490.fc37.noarch.rpm                                                                                                                                    1.0 MB/s |  90 kB     00:00
+    (58/128): perl-Pod-Simple-3.43-490.fc37.noarch.rpm                                                                                                                                        2.2 MB/s | 225 kB     00:00
+    (59/128): perl-Pod-Usage-2.03-3.fc37.noarch.rpm                                                                                                                                           455 kB/s |  40 kB     00:00
+    (60/128): perl-Scalar-List-Utils-1.63-489.fc37.x86_64.rpm                                                                                                                                 808 kB/s |  72 kB     00:00
+    (61/128): perl-SelectSaver-1.02-492.fc37.noarch.rpm                                                                                                                                       168 kB/s |  15 kB     00:00
+    (62/128): perl-Socket-2.036-1.fc37.x86_64.rpm                                                                                                                                             618 kB/s |  55 kB     00:00
+    (63/128): perl-Storable-3.26-489.fc37.x86_64.rpm                                                                                                                                          1.1 MB/s |  97 kB     00:00
+    (64/128): perl-Symbol-1.09-492.fc37.noarch.rpm                                                                                                                                            196 kB/s |  17 kB     00:00
+    (65/128): perl-Term-ANSIColor-5.01-490.fc37.noarch.rpm                                                                                                                                    540 kB/s |  48 kB     00:00
+    (66/128): perl-Term-Cap-1.17-489.fc37.noarch.rpm                                                                                                                                          247 kB/s |  22 kB     00:00
+    (67/128): perl-TermReadKey-2.38-14.fc37.x86_64.rpm                                                                                                                                        403 kB/s |  36 kB     00:00
+    (68/128): perl-Text-ParseWords-3.31-489.fc37.noarch.rpm                                                                                                                                   188 kB/s |  16 kB     00:00
+    (69/128): perl-Text-Tabs+Wrap-2021.0814-489.fc37.noarch.rpm                                                                                                                               251 kB/s |  22 kB     00:00
+    (70/128): perl-Time-Local-1.300-489.fc37.noarch.rpm                                                                                                                                       379 kB/s |  33 kB     00:00
+    (71/128): perl-base-2.27-492.fc37.noarch.rpm                                                                                                                                              219 kB/s |  19 kB     00:00
+    (72/128): perl-constant-1.33-490.fc37.noarch.rpm                                                                                                                                          256 kB/s |  23 kB     00:00
+    (73/128): perl-if-0.61.000-492.fc37.noarch.rpm                                                                                                                                            194 kB/s |  17 kB     00:00
+    (74/128): perl-interpreter-5.36.0-492.fc37.x86_64.rpm                                                                                                                                     841 kB/s |  75 kB     00:00
+    (75/128): perl-lib-0.65-492.fc37.x86_64.rpm                                                                                                                                               204 kB/s |  18 kB     00:00
+    (76/128): perl-libnet-3.14-490.fc37.noarch.rpm                                                                                                                                            1.1 MB/s | 132 kB     00:00
+    (77/128): perl-mro-1.26-492.fc37.x86_64.rpm                                                                                                                                               360 kB/s |  32 kB     00:00
+    (78/128): perl-overload-1.35-492.fc37.noarch.rpm                                                                                                                                          544 kB/s |  49 kB     00:00
+    (79/128): perl-libs-5.36.0-492.fc37.x86_64.rpm                                                                                                                                             11 MB/s | 2.2 MB     00:00
+    (80/128): perl-overloading-0.02-492.fc37.noarch.rpm                                                                                                                                       158 kB/s |  16 kB     00:00
+    (81/128): perl-parent-0.238-489.fc37.noarch.rpm                                                                                                                                           157 kB/s |  14 kB     00:00
+    (82/128): perl-podlators-4.14-489.fc37.noarch.rpm                                                                                                                                         1.3 MB/s | 116 kB     00:00
+    (83/128): perl-subs-1.04-492.fc37.noarch.rpm                                                                                                                                              164 kB/s |  15 kB     00:00
+    (84/128): perl-vars-1.05-492.fc37.noarch.rpm                                                                                                                                              182 kB/s |  16 kB     00:00
+    (85/128): pkgconf-1.8.0-3.fc37.x86_64.rpm                                                                                                                                                 444 kB/s |  41 kB     00:00
+    (86/128): pkgconf-m4-1.8.0-3.fc37.noarch.rpm                                                                                                                                              144 kB/s |  14 kB     00:00
+    (87/128): pkgconf-pkg-config-1.8.0-3.fc37.x86_64.rpm                                                                                                                                      113 kB/s |  10 kB     00:00
+    (88/128): python3-fb-re2-1.0.7-10.fc37.x86_64.rpm                                                                                                                                         231 kB/s |  24 kB     00:00
+    (89/128): qrencode-libs-4.1.1-3.fc37.x86_64.rpm                                                                                                                                           622 kB/s |  61 kB     00:00
+    (90/128): re2-20211101-3.fc36.x86_64.rpm                                                                                                                                                  1.9 MB/s | 196 kB     00:00
+    (91/128): utf8proc-2.7.0-3.fc37.x86_64.rpm                                                                                                                                                896 kB/s |  80 kB     00:00
+    (92/128): util-linux-2.38.1-1.fc37.x86_64.rpm                                                                                                                                             9.0 MB/s | 2.3 MB     00:00
+    (93/128): apr-1.7.2-2.fc37.x86_64.rpm                                                                                                                                                     260 kB/s | 127 kB     00:00
+    (94/128): apr-util-bdb-1.6.3-2.fc37.x86_64.rpm                                                                                                                                             45 kB/s |  13 kB     00:00
+    (95/128): apr-util-1.6.3-2.fc37.x86_64.rpm                                                                                                                                                207 kB/s |  96 kB     00:00
+    (96/128): apr-util-openssl-1.6.3-2.fc37.x86_64.rpm                                                                                                                                        225 kB/s |  15 kB     00:00
+    (97/128): binutils-2.38-25.fc37.x86_64.rpm                                                                                                                                                4.5 MB/s | 5.4 MB     00:01
+    (98/128): binutils-gold-2.38-25.fc37.x86_64.rpm                                                                                                                                           642 kB/s | 775 kB     00:01
+    (99/128): dbus-1.14.6-1.fc37.x86_64.rpm                                                                                                                                                    21 kB/s | 7.7 kB     00:00
+    (100/128): dbus-broker-33-1.fc37.x86_64.rpm                                                                                                                                               291 kB/s | 174 kB     00:00
+    (101/128): dbus-common-1.14.6-1.fc37.noarch.rpm                                                                                                                                            59 kB/s |  15 kB     00:00
+    (102/128): elfutils-debuginfod-client-0.188-3.fc37.x86_64.rpm                                                                                                                             156 kB/s |  40 kB     00:00
+    (103/128): emacs-filesystem-28.2-3.fc37.noarch.rpm                                                                                                                                         17 kB/s | 7.5 kB     00:00
+    (104/128): git-2.39.1-1.fc37.x86_64.rpm                                                                                                                                                    88 kB/s |  66 kB     00:00
+    (105/128): cpp-12.2.1-4.fc37.x86_64.rpm                                                                                                                                                   3.4 MB/s |  11 MB     00:03
+    (106/128): gcc-12.2.1-4.fc37.x86_64.rpm                                                                                                                                                   3.5 MB/s |  33 MB     00:09
+    (107/128): git-core-doc-2.39.1-1.fc37.noarch.rpm                                                                                                                                          341 kB/s | 2.8 MB     00:08
+    (108/128): git-core-2.39.1-1.fc37.x86_64.rpm                                                                                                                                              492 kB/s | 4.2 MB     00:08
+    (109/128): glibc-devel-2.36-9.fc37.x86_64.rpm                                                                                                                                             319 kB/s | 102 kB     00:00
+    (110/128): glibc-headers-x86-2.36-9.fc37.noarch.rpm                                                                                                                                       1.3 MB/s | 581 kB     00:00
+    (111/128): golang-1.19.5-1.fc37.x86_64.rpm                                                                                                                                                2.8 MB/s | 579 kB     00:00
+    (112/128): kernel-headers-6.1.5-200.fc37.x86_64.rpm                                                                                                                                       433 kB/s | 1.5 MB     00:03
+    (113/128): libedit-3.1-43.20221009cvs.fc37.x86_64.rpm                                                                                                                                     173 kB/s | 106 kB     00:00
+    (114/128): libxcrypt-devel-4.4.33-4.fc37.x86_64.rpm                                                                                                                                        62 kB/s |  30 kB     00:00
+    (115/128): golang-bin-1.19.5-1.fc37.x86_64.rpm                                                                                                                                            7.6 MB/s |  98 MB     00:12
+    (116/128): mercurial-6.2.3-1.fc37.x86_64.rpm                                                                                                                                              794 kB/s | 6.4 MB     00:08
+    (117/128): perl-Getopt-Long-2.54-1.fc37.noarch.rpm                                                                                                                                        154 kB/s |  60 kB     00:00
+    (118/128): golang-src-1.19.5-1.fc37.noarch.rpm                                                                                                                                            883 kB/s |  12 MB     00:13
+    (119/128): ncurses-6.3-4.20220501.fc37.x86_64.rpm                                                                                                                                         371 kB/s | 409 kB     00:01
+    (120/128): perl-Git-2.39.1-1.fc37.noarch.rpm                                                                                                                                               79 kB/s |  43 kB     00:00
+    (121/128): perl-URI-5.17-1.fc37.noarch.rpm                                                                                                                                                1.8 MB/s | 123 kB     00:00
+    (122/128): subversion-1.14.2-8.fc37.x86_64.rpm                                                                                                                                            5.1 MB/s | 1.0 MB     00:00
+    (123/128): subversion-libs-1.14.2-8.fc37.x86_64.rpm                                                                                                                                       3.5 MB/s | 1.5 MB     00:00
+    (124/128): systemd-251.11-2.fc37.x86_64.rpm                                                                                                                                               4.1 MB/s | 4.2 MB     00:01
+    (125/128): systemd-pam-251.11-2.fc37.x86_64.rpm                                                                                                                                           507 kB/s | 334 kB     00:00
+    (126/128): systemd-networkd-251.11-2.fc37.x86_64.rpm                                                                                                                                      644 kB/s | 616 kB     00:00
+    (127/128): systemd-resolved-251.11-2.fc37.x86_64.rpm                                                                                                                                      2.2 MB/s | 281 kB     00:00
+    (128/128): xkeyboard-config-2.36-3.fc37.noarch.rpm                                                                                                                                        3.8 MB/s | 957 kB     00:00
+    --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    Total                                                                                                                                                                                     6.5 MB/s | 207 MB     00:32
+    Running transaction check
+    Transaction check succeeded.
+    Running transaction test
+    Transaction test succeeded.
+    Running transaction
+      Running scriptlet: golang-1.19.5-1.fc37.x86_64                                                                                                                                                                      1/1
+      Preparing        :                                                                                                                                                                                                  1/1
+      Installing       : apr-1.7.2-2.fc37.x86_64                                                                                                                                                                        1/128
+      Installing       : apr-util-bdb-1.6.3-2.fc37.x86_64                                                                                                                                                               2/128
+      Installing       : apr-util-openssl-1.6.3-2.fc37.x86_64                                                                                                                                                           3/128
+      Installing       : apr-util-1.6.3-2.fc37.x86_64                                                                                                                                                                   4/128
+      Installing       : libmpc-1.2.1-5.fc37.x86_64                                                                                                                                                                     5/128
+      Installing       : libfdisk-2.38.1-1.fc37.x86_64                                                                                                                                                                  6/128
+      Installing       : cpp-12.2.1-4.fc37.x86_64                                                                                                                                                                       7/128
+      Installing       : libserf-1.3.9-24.fc37.x86_64                                                                                                                                                                   8/128
+      Installing       : xkeyboard-config-2.36-3.fc37.noarch                                                                                                                                                            9/128
+      Installing       : libxkbcommon-1.4.1-2.fc37.x86_64                                                                                                                                                              10/128
+      Installing       : ncurses-6.3-4.20220501.fc37.x86_64                                                                                                                                                            11/128
+      Installing       : libedit-3.1-43.20221009cvs.fc37.x86_64                                                                                                                                                        12/128
+      Installing       : kernel-headers-6.1.5-200.fc37.x86_64                                                                                                                                                          13/128
+      Installing       : golang-src-1.19.5-1.fc37.noarch                                                                                                                                                               14/128
+      Installing       : glibc-headers-x86-2.36-9.fc37.noarch                                                                                                                                                          15/128
+      Installing       : emacs-filesystem-1:28.2-3.fc37.noarch                                                                                                                                                         16/128
+      Installing       : elfutils-debuginfod-client-0.188-3.fc37.x86_64                                                                                                                                                17/128
+      Installing       : binutils-gold-2.38-25.fc37.x86_64                                                                                                                                                             18/128
+      Installing       : binutils-2.38-25.fc37.x86_64                                                                                                                                                                  19/128
+      Running scriptlet: binutils-2.38-25.fc37.x86_64                                                                                                                                                                  19/128
+      Installing       : dbus-common-1:1.14.6-1.fc37.noarch                                                                                                                                                            20/128
+      Running scriptlet: dbus-common-1:1.14.6-1.fc37.noarch                                                                                                                                                            20/128
+      Running scriptlet: dbus-broker-33-1.fc37.x86_64                                                                                                                                                                  21/128
+      Installing       : dbus-broker-33-1.fc37.x86_64                                                                                                                                                                  21/128
+      Running scriptlet: dbus-broker-33-1.fc37.x86_64                                                                                                                                                                  21/128
+      Installing       : dbus-1:1.14.6-1.fc37.x86_64                                                                                                                                                                   22/128
+      Installing       : utf8proc-2.7.0-3.fc37.x86_64                                                                                                                                                                  23/128
+      Installing       : subversion-libs-1.14.2-8.fc37.x86_64                                                                                                                                                          24/128
+      Installing       : re2-1:20211101-3.fc36.x86_64                                                                                                                                                                  25/128
+      Installing       : python3-fb-re2-1.0.7-10.fc37.x86_64                                                                                                                                                           26/128
+      Installing       : mercurial-6.2.3-1.fc37.x86_64                                                                                                                                                                 27/128
+      Installing       : qrencode-libs-4.1.1-3.fc37.x86_64                                                                                                                                                             28/128
+      Installing       : pkgconf-m4-1.8.0-3.fc37.noarch                                                                                                                                                                29/128
+      Running scriptlet: libutempter-1.2.1-7.fc37.x86_64                                                                                                                                                               30/128
+      Installing       : libutempter-1.2.1-7.fc37.x86_64                                                                                                                                                               30/128
+      Installing       : util-linux-2.38.1-1.fc37.x86_64                                                                                                                                                               31/128
+    warning: /etc/adjtime created as /etc/adjtime.rpmnew
+
+      Running scriptlet: openssh-8.8p1-7.fc37.x86_64                                                                                                                                                                   32/128
+      Installing       : openssh-8.8p1-7.fc37.x86_64                                                                                                                                                                   32/128
+      Installing       : libtool-ltdl-2.4.7-2.fc37.x86_64                                                                                                                                                              33/128
+      Installing       : libseccomp-2.5.3-3.fc37.x86_64                                                                                                                                                                34/128
+      Installing       : libpkgconf-1.8.0-3.fc37.x86_64                                                                                                                                                                35/128
+      Installing       : pkgconf-1.8.0-3.fc37.x86_64                                                                                                                                                                   36/128
+      Installing       : pkgconf-pkg-config-1.8.0-3.fc37.x86_64                                                                                                                                                        37/128
+      Installing       : glibc-devel-2.36-9.fc37.x86_64                                                                                                                                                                38/128
+      Installing       : libxcrypt-devel-4.4.33-4.fc37.x86_64                                                                                                                                                          39/128
+      Installing       : libcbor-0.7.0-7.fc37.x86_64                                                                                                                                                                   40/128
+      Installing       : libfido2-1.11.0-3.fc37.x86_64                                                                                                                                                                 41/128
+      Installing       : openssh-clients-8.8p1-7.fc37.x86_64                                                                                                                                                           42/128
+      Running scriptlet: openssh-clients-8.8p1-7.fc37.x86_64                                                                                                                                                           42/128
+      Installing       : libbpf-2:0.8.0-2.fc37.x86_64                                                                                                                                                                  43/128
+      Installing       : libargon2-20190702-1.fc37.x86_64                                                                                                                                                              44/128
+      Installing       : less-590-5.fc37.x86_64                                                                                                                                                                        45/128
+      Installing       : git-core-2.39.1-1.fc37.x86_64                                                                                                                                                                 46/128
+      Installing       : git-core-doc-2.39.1-1.fc37.noarch                                                                                                                                                             47/128
+      Installing       : kmod-libs-30-2.fc37.x86_64                                                                                                                                                                    48/128
+      Running scriptlet: groff-base-1.22.4-10.fc37.x86_64                                                                                                                                                              49/128
+      Installing       : groff-base-1.22.4-10.fc37.x86_64                                                                                                                                                              49/128
+      Running scriptlet: groff-base-1.22.4-10.fc37.x86_64                                                                                                                                                              49/128
+      Installing       : perl-Digest-1.20-489.fc37.noarch                                                                                                                                                              50/128
+      Installing       : perl-Digest-MD5-2.58-489.fc37.x86_64                                                                                                                                                          51/128
+      Installing       : perl-B-1.83-492.fc37.x86_64                                                                                                                                                                   52/128
+      Installing       : perl-FileHandle-2.03-492.fc37.noarch                                                                                                                                                          53/128
+      Installing       : perl-AutoLoader-5.74-492.fc37.noarch                                                                                                                                                          54/128
+      Installing       : perl-Data-Dumper-2.184-490.fc37.x86_64                                                                                                                                                        55/128
+      Installing       : perl-libnet-3.14-490.fc37.noarch                                                                                                                                                              56/128
+      Installing       : perl-base-2.27-492.fc37.noarch                                                                                                                                                                57/128
+      Installing       : perl-Net-SSLeay-1.92-4.fc37.x86_64                                                                                                                                                            58/128
+      Installing       : perl-URI-5.17-1.fc37.noarch                                                                                                                                                                   59/128
+      Installing       : perl-Text-Tabs+Wrap-2021.0814-489.fc37.noarch                                                                                                                                                 60/128
+      Installing       : perl-Mozilla-CA-20211001-4.fc37.noarch                                                                                                                                                        61/128
+      Installing       : perl-if-0.61.000-492.fc37.noarch                                                                                                                                                              62/128
+      Installing       : perl-IO-Socket-IP-0.41-490.fc37.noarch                                                                                                                                                        63/128
+      Installing       : perl-Time-Local-2:1.300-489.fc37.noarch                                                                                                                                                       64/128
+      Installing       : perl-File-Path-2.18-489.fc37.noarch                                                                                                                                                           65/128
+      Installing       : perl-Pod-Escapes-1:1.07-489.fc37.noarch                                                                                                                                                       66/128
+      Installing       : perl-IO-Socket-SSL-2.075-1.fc37.noarch                                                                                                                                                        67/128
+      Installing       : perl-Class-Struct-0.66-492.fc37.noarch                                                                                                                                                        68/128
+      Installing       : perl-POSIX-2.03-492.fc37.x86_64                                                                                                                                                               69/128
+      Installing       : perl-Term-ANSIColor-5.01-490.fc37.noarch                                                                                                                                                      70/128
+      Installing       : perl-IPC-Open3-1.22-492.fc37.noarch                                                                                                                                                           71/128
+      Installing       : perl-subs-1.04-492.fc37.noarch                                                                                                                                                                72/128
+      Installing       : perl-File-Temp-1:0.231.100-489.fc37.noarch                                                                                                                                                    73/128
+      Installing       : perl-Term-Cap-1.17-489.fc37.noarch                                                                                                                                                            74/128
+      Installing       : perl-HTTP-Tiny-0.082-1.fc37.noarch                                                                                                                                                            75/128
+      Installing       : perl-Pod-Simple-1:3.43-490.fc37.noarch                                                                                                                                                        76/128
+      Installing       : perl-Socket-4:2.036-1.fc37.x86_64                                                                                                                                                             77/128
+      Installing       : perl-SelectSaver-1.02-492.fc37.noarch                                                                                                                                                         78/128
+      Installing       : perl-Symbol-1.09-492.fc37.noarch                                                                                                                                                              79/128
+      Installing       : perl-File-stat-1.12-492.fc37.noarch                                                                                                                                                           80/128
+      Installing       : perl-podlators-1:4.14-489.fc37.noarch                                                                                                                                                         81/128
+      Installing       : perl-Pod-Perldoc-3.28.01-490.fc37.noarch                                                                                                                                                      82/128
+      Installing       : perl-Fcntl-1.15-492.fc37.x86_64                                                                                                                                                               83/128
+      Installing       : perl-Text-ParseWords-3.31-489.fc37.noarch                                                                                                                                                     84/128
+      Installing       : perl-mro-1.26-492.fc37.x86_64                                                                                                                                                                 85/128
+      Installing       : perl-IO-1.50-492.fc37.x86_64                                                                                                                                                                  86/128
+      Installing       : perl-overloading-0.02-492.fc37.noarch                                                                                                                                                         87/128
+      Installing       : perl-Pod-Usage-4:2.03-3.fc37.noarch                                                                                                                                                           88/128
+      Installing       : perl-Errno-1.36-492.fc37.x86_64                                                                                                                                                               89/128
+      Installing       : perl-File-Basename-2.85-492.fc37.noarch                                                                                                                                                       90/128
+      Installing       : perl-Getopt-Std-1.13-492.fc37.noarch                                                                                                                                                          91/128
+      Installing       : perl-MIME-Base64-3.16-489.fc37.x86_64                                                                                                                                                         92/128
+      Installing       : perl-Scalar-List-Utils-5:1.63-489.fc37.x86_64                                                                                                                                                 93/128
+      Installing       : perl-constant-1.33-490.fc37.noarch                                                                                                                                                            94/128
+      Installing       : perl-Storable-1:3.26-489.fc37.x86_64                                                                                                                                                          95/128
+      Installing       : perl-overload-1.35-492.fc37.noarch                                                                                                                                                            96/128
+      Installing       : perl-parent-1:0.238-489.fc37.noarch                                                                                                                                                           97/128
+      Installing       : perl-vars-1.05-492.fc37.noarch                                                                                                                                                                98/128
+      Installing       : perl-Getopt-Long-1:2.54-1.fc37.noarch                                                                                                                                                         99/128
+      Installing       : perl-Carp-1.52-489.fc37.noarch                                                                                                                                                               100/128
+      Installing       : perl-Exporter-5.77-489.fc37.noarch                                                                                                                                                           101/128
+      Installing       : perl-NDBM_File-1.15-492.fc37.x86_64                                                                                                                                                          102/128
+      Installing       : perl-PathTools-3.84-489.fc37.x86_64                                                                                                                                                          103/128
+      Installing       : perl-DynaLoader-1.52-492.fc37.x86_64                                                                                                                                                         104/128
+      Installing       : perl-Encode-4:3.19-492.fc37.x86_64                                                                                                                                                           105/128
+      Installing       : perl-libs-4:5.36.0-492.fc37.x86_64                                                                                                                                                           106/128
+      Installing       : perl-interpreter-4:5.36.0-492.fc37.x86_64                                                                                                                                                    107/128
+      Installing       : perl-Error-1:0.17029-10.fc37.noarch                                                                                                                                                          108/128
+      Installing       : perl-File-Find-1.40-492.fc37.noarch                                                                                                                                                          109/128
+      Installing       : perl-TermReadKey-2.38-14.fc37.x86_64                                                                                                                                                         110/128
+      Installing       : perl-lib-0.65-492.fc37.x86_64                                                                                                                                                                111/128
+      Installing       : perl-Git-2.39.1-1.fc37.noarch                                                                                                                                                                112/128
+      Installing       : git-2.39.1-1.fc37.x86_64                                                                                                                                                                     113/128
+      Installing       : gc-8.0.6-4.fc37.x86_64                                                                                                                                                                       114/128
+      Installing       : guile22-2.2.7-6.fc37.x86_64                                                                                                                                                                  115/128
+      Installing       : make-1:4.3-11.fc37.x86_64                                                                                                                                                                    116/128
+      Installing       : gcc-12.2.1-4.fc37.x86_64                                                                                                                                                                     117/128
+      Installing       : diffutils-3.8-3.fc37.x86_64                                                                                                                                                                  118/128
+      Installing       : device-mapper-libs-1.02.175-9.fc37.x86_64                                                                                                                                                    119/128
+      Installing       : cryptsetup-libs-2.5.0-1.fc37.x86_64                                                                                                                                                          120/128
+      Installing       : device-mapper-1.02.175-9.fc37.x86_64                                                                                                                                                         121/128
+      Installing       : systemd-networkd-251.11-2.fc37.x86_64                                                                                                                                                        122/128
+      Running scriptlet: systemd-networkd-251.11-2.fc37.x86_64                                                                                                                                                        122/128
+      Installing       : systemd-pam-251.11-2.fc37.x86_64                                                                                                                                                             123/128
+      Installing       : systemd-resolved-251.11-2.fc37.x86_64                                                                                                                                                        124/128
+      Running scriptlet: systemd-resolved-251.11-2.fc37.x86_64                                                                                                                                                        124/128
+      Installing       : systemd-251.11-2.fc37.x86_64                                                                                                                                                                 125/128
+      Running scriptlet: systemd-251.11-2.fc37.x86_64                                                                                                                                                                 125/128
+    Creating group 'input' with GID 104.
+    Creating group 'kvm' with GID 36.
+    Creating group 'render' with GID 105.
+    Creating group 'sgx' with GID 106.
+    Creating group 'systemd-journal' with GID 190.
+    Creating group 'systemd-network' with GID 192.
+    Creating user 'systemd-network' (systemd Network Management) with UID 192 and GID 192.
+    Creating group 'systemd-oom' with GID 999.
+    Creating user 'systemd-oom' (systemd Userspace OOM Killer) with UID 999 and GID 999.
+    Creating group 'systemd-resolve' with GID 193.
+    Creating user 'systemd-resolve' (systemd Resolver) with UID 193 and GID 193.
+
+      Installing       : subversion-1.14.2-8.fc37.x86_64                                                                                                                                                              126/128
+      Running scriptlet: subversion-1.14.2-8.fc37.x86_64                                                                                                                                                              126/128
+      Installing       : golang-1.19.5-1.fc37.x86_64                                                                                                                                                                  127/128
+      Installing       : golang-bin-1.19.5-1.fc37.x86_64                                                                                                                                                              128/128
+      Running scriptlet: golang-bin-1.19.5-1.fc37.x86_64                                                                                                                                                              128/128
+      Running scriptlet: systemd-resolved-251.11-2.fc37.x86_64                                                                                                                                                        128/128
+      Running scriptlet: golang-bin-1.19.5-1.fc37.x86_64                                                                                                                                                              128/128
+    /usr/sbin/ldconfig: /usr/lib/wsl/lib/libcuda.so.1 is not a symbolic link
+
+      Verifying        : cryptsetup-libs-2.5.0-1.fc37.x86_64                                                                                                                                                            1/128
+      Verifying        : device-mapper-1.02.175-9.fc37.x86_64                                                                                                                                                           2/128
+      Verifying        : device-mapper-libs-1.02.175-9.fc37.x86_64                                                                                                                                                      3/128
+      Verifying        : diffutils-3.8-3.fc37.x86_64                                                                                                                                                                    4/128
+      Verifying        : gc-8.0.6-4.fc37.x86_64                                                                                                                                                                         5/128
+      Verifying        : groff-base-1.22.4-10.fc37.x86_64                                                                                                                                                               6/128
+      Verifying        : guile22-2.2.7-6.fc37.x86_64                                                                                                                                                                    7/128
+      Verifying        : kmod-libs-30-2.fc37.x86_64                                                                                                                                                                     8/128
+      Verifying        : less-590-5.fc37.x86_64                                                                                                                                                                         9/128
+      Verifying        : libargon2-20190702-1.fc37.x86_64                                                                                                                                                              10/128
+      Verifying        : libbpf-2:0.8.0-2.fc37.x86_64                                                                                                                                                                  11/128
+      Verifying        : libcbor-0.7.0-7.fc37.x86_64                                                                                                                                                                   12/128
+      Verifying        : libfdisk-2.38.1-1.fc37.x86_64                                                                                                                                                                 13/128
+      Verifying        : libfido2-1.11.0-3.fc37.x86_64                                                                                                                                                                 14/128
+      Verifying        : libmpc-1.2.1-5.fc37.x86_64                                                                                                                                                                    15/128
+      Verifying        : libpkgconf-1.8.0-3.fc37.x86_64                                                                                                                                                                16/128
+      Verifying        : libseccomp-2.5.3-3.fc37.x86_64                                                                                                                                                                17/128
+      Verifying        : libserf-1.3.9-24.fc37.x86_64                                                                                                                                                                  18/128
+      Verifying        : libtool-ltdl-2.4.7-2.fc37.x86_64                                                                                                                                                              19/128
+      Verifying        : libutempter-1.2.1-7.fc37.x86_64                                                                                                                                                               20/128
+      Verifying        : libxkbcommon-1.4.1-2.fc37.x86_64                                                                                                                                                              21/128
+      Verifying        : make-1:4.3-11.fc37.x86_64                                                                                                                                                                     22/128
+      Verifying        : openssh-8.8p1-7.fc37.x86_64                                                                                                                                                                   23/128
+      Verifying        : openssh-clients-8.8p1-7.fc37.x86_64                                                                                                                                                           24/128
+      Verifying        : perl-AutoLoader-5.74-492.fc37.noarch                                                                                                                                                          25/128
+      Verifying        : perl-B-1.83-492.fc37.x86_64                                                                                                                                                                   26/128
+      Verifying        : perl-Carp-1.52-489.fc37.noarch                                                                                                                                                                27/128
+      Verifying        : perl-Class-Struct-0.66-492.fc37.noarch                                                                                                                                                        28/128
+      Verifying        : perl-Data-Dumper-2.184-490.fc37.x86_64                                                                                                                                                        29/128
+      Verifying        : perl-Digest-1.20-489.fc37.noarch                                                                                                                                                              30/128
+      Verifying        : perl-Digest-MD5-2.58-489.fc37.x86_64                                                                                                                                                          31/128
+      Verifying        : perl-DynaLoader-1.52-492.fc37.x86_64                                                                                                                                                          32/128
+      Verifying        : perl-Encode-4:3.19-492.fc37.x86_64                                                                                                                                                            33/128
+      Verifying        : perl-Errno-1.36-492.fc37.x86_64                                                                                                                                                               34/128
+      Verifying        : perl-Error-1:0.17029-10.fc37.noarch                                                                                                                                                           35/128
+      Verifying        : perl-Exporter-5.77-489.fc37.noarch                                                                                                                                                            36/128
+      Verifying        : perl-Fcntl-1.15-492.fc37.x86_64                                                                                                                                                               37/128
+      Verifying        : perl-File-Basename-2.85-492.fc37.noarch                                                                                                                                                       38/128
+      Verifying        : perl-File-Find-1.40-492.fc37.noarch                                                                                                                                                           39/128
+      Verifying        : perl-File-Path-2.18-489.fc37.noarch                                                                                                                                                           40/128
+      Verifying        : perl-File-Temp-1:0.231.100-489.fc37.noarch                                                                                                                                                    41/128
+      Verifying        : perl-File-stat-1.12-492.fc37.noarch                                                                                                                                                           42/128
+      Verifying        : perl-FileHandle-2.03-492.fc37.noarch                                                                                                                                                          43/128
+      Verifying        : perl-Getopt-Std-1.13-492.fc37.noarch                                                                                                                                                          44/128
+      Verifying        : perl-HTTP-Tiny-0.082-1.fc37.noarch                                                                                                                                                            45/128
+      Verifying        : perl-IO-1.50-492.fc37.x86_64                                                                                                                                                                  46/128
+      Verifying        : perl-IO-Socket-IP-0.41-490.fc37.noarch                                                                                                                                                        47/128
+      Verifying        : perl-IO-Socket-SSL-2.075-1.fc37.noarch                                                                                                                                                        48/128
+      Verifying        : perl-IPC-Open3-1.22-492.fc37.noarch                                                                                                                                                           49/128
+      Verifying        : perl-MIME-Base64-3.16-489.fc37.x86_64                                                                                                                                                         50/128
+      Verifying        : perl-Mozilla-CA-20211001-4.fc37.noarch                                                                                                                                                        51/128
+      Verifying        : perl-NDBM_File-1.15-492.fc37.x86_64                                                                                                                                                           52/128
+      Verifying        : perl-Net-SSLeay-1.92-4.fc37.x86_64                                                                                                                                                            53/128
+      Verifying        : perl-POSIX-2.03-492.fc37.x86_64                                                                                                                                                               54/128
+      Verifying        : perl-PathTools-3.84-489.fc37.x86_64                                                                                                                                                           55/128
+      Verifying        : perl-Pod-Escapes-1:1.07-489.fc37.noarch                                                                                                                                                       56/128
+      Verifying        : perl-Pod-Perldoc-3.28.01-490.fc37.noarch                                                                                                                                                      57/128
+      Verifying        : perl-Pod-Simple-1:3.43-490.fc37.noarch                                                                                                                                                        58/128
+      Verifying        : perl-Pod-Usage-4:2.03-3.fc37.noarch                                                                                                                                                           59/128
+      Verifying        : perl-Scalar-List-Utils-5:1.63-489.fc37.x86_64                                                                                                                                                 60/128
+      Verifying        : perl-SelectSaver-1.02-492.fc37.noarch                                                                                                                                                         61/128
+      Verifying        : perl-Socket-4:2.036-1.fc37.x86_64                                                                                                                                                             62/128
+      Verifying        : perl-Storable-1:3.26-489.fc37.x86_64                                                                                                                                                          63/128
+      Verifying        : perl-Symbol-1.09-492.fc37.noarch                                                                                                                                                              64/128
+      Verifying        : perl-Term-ANSIColor-5.01-490.fc37.noarch                                                                                                                                                      65/128
+      Verifying        : perl-Term-Cap-1.17-489.fc37.noarch                                                                                                                                                            66/128
+      Verifying        : perl-TermReadKey-2.38-14.fc37.x86_64                                                                                                                                                          67/128
+      Verifying        : perl-Text-ParseWords-3.31-489.fc37.noarch                                                                                                                                                     68/128
+      Verifying        : perl-Text-Tabs+Wrap-2021.0814-489.fc37.noarch                                                                                                                                                 69/128
+      Verifying        : perl-Time-Local-2:1.300-489.fc37.noarch                                                                                                                                                       70/128
+      Verifying        : perl-base-2.27-492.fc37.noarch                                                                                                                                                                71/128
+      Verifying        : perl-constant-1.33-490.fc37.noarch                                                                                                                                                            72/128
+      Verifying        : perl-if-0.61.000-492.fc37.noarch                                                                                                                                                              73/128
+      Verifying        : perl-interpreter-4:5.36.0-492.fc37.x86_64                                                                                                                                                     74/128
+      Verifying        : perl-lib-0.65-492.fc37.x86_64                                                                                                                                                                 75/128
+      Verifying        : perl-libnet-3.14-490.fc37.noarch                                                                                                                                                              76/128
+      Verifying        : perl-libs-4:5.36.0-492.fc37.x86_64                                                                                                                                                            77/128
+      Verifying        : perl-mro-1.26-492.fc37.x86_64                                                                                                                                                                 78/128
+      Verifying        : perl-overload-1.35-492.fc37.noarch                                                                                                                                                            79/128
+      Verifying        : perl-overloading-0.02-492.fc37.noarch                                                                                                                                                         80/128
+      Verifying        : perl-parent-1:0.238-489.fc37.noarch                                                                                                                                                           81/128
+      Verifying        : perl-podlators-1:4.14-489.fc37.noarch                                                                                                                                                         82/128
+      Verifying        : perl-subs-1.04-492.fc37.noarch                                                                                                                                                                83/128
+      Verifying        : perl-vars-1.05-492.fc37.noarch                                                                                                                                                                84/128
+      Verifying        : pkgconf-1.8.0-3.fc37.x86_64                                                                                                                                                                   85/128
+      Verifying        : pkgconf-m4-1.8.0-3.fc37.noarch                                                                                                                                                                86/128
+      Verifying        : pkgconf-pkg-config-1.8.0-3.fc37.x86_64                                                                                                                                                        87/128
+      Verifying        : python3-fb-re2-1.0.7-10.fc37.x86_64                                                                                                                                                           88/128
+      Verifying        : qrencode-libs-4.1.1-3.fc37.x86_64                                                                                                                                                             89/128
+      Verifying        : re2-1:20211101-3.fc36.x86_64                                                                                                                                                                  90/128
+      Verifying        : utf8proc-2.7.0-3.fc37.x86_64                                                                                                                                                                  91/128
+      Verifying        : util-linux-2.38.1-1.fc37.x86_64                                                                                                                                                               92/128
+      Verifying        : apr-1.7.2-2.fc37.x86_64                                                                                                                                                                       93/128
+      Verifying        : apr-util-1.6.3-2.fc37.x86_64                                                                                                                                                                  94/128
+      Verifying        : apr-util-bdb-1.6.3-2.fc37.x86_64                                                                                                                                                              95/128
+      Verifying        : apr-util-openssl-1.6.3-2.fc37.x86_64                                                                                                                                                          96/128
+      Verifying        : binutils-2.38-25.fc37.x86_64                                                                                                                                                                  97/128
+      Verifying        : binutils-gold-2.38-25.fc37.x86_64                                                                                                                                                             98/128
+      Verifying        : cpp-12.2.1-4.fc37.x86_64                                                                                                                                                                      99/128
+      Verifying        : dbus-1:1.14.6-1.fc37.x86_64                                                                                                                                                                  100/128
+      Verifying        : dbus-broker-33-1.fc37.x86_64                                                                                                                                                                 101/128
+      Verifying        : dbus-common-1:1.14.6-1.fc37.noarch                                                                                                                                                           102/128
+      Verifying        : elfutils-debuginfod-client-0.188-3.fc37.x86_64                                                                                                                                               103/128
+      Verifying        : emacs-filesystem-1:28.2-3.fc37.noarch                                                                                                                                                        104/128
+      Verifying        : gcc-12.2.1-4.fc37.x86_64                                                                                                                                                                     105/128
+      Verifying        : git-2.39.1-1.fc37.x86_64                                                                                                                                                                     106/128
+      Verifying        : git-core-2.39.1-1.fc37.x86_64                                                                                                                                                                107/128
+      Verifying        : git-core-doc-2.39.1-1.fc37.noarch                                                                                                                                                            108/128
+      Verifying        : glibc-devel-2.36-9.fc37.x86_64                                                                                                                                                               109/128
+      Verifying        : glibc-headers-x86-2.36-9.fc37.noarch                                                                                                                                                         110/128
+      Verifying        : golang-1.19.5-1.fc37.x86_64                                                                                                                                                                  111/128
+      Verifying        : golang-bin-1.19.5-1.fc37.x86_64                                                                                                                                                              112/128
+      Verifying        : golang-src-1.19.5-1.fc37.noarch                                                                                                                                                              113/128
+      Verifying        : kernel-headers-6.1.5-200.fc37.x86_64                                                                                                                                                         114/128
+      Verifying        : libedit-3.1-43.20221009cvs.fc37.x86_64                                                                                                                                                       115/128
+      Verifying        : libxcrypt-devel-4.4.33-4.fc37.x86_64                                                                                                                                                         116/128
+      Verifying        : mercurial-6.2.3-1.fc37.x86_64                                                                                                                                                                117/128
+      Verifying        : ncurses-6.3-4.20220501.fc37.x86_64                                                                                                                                                           118/128
+      Verifying        : perl-Getopt-Long-1:2.54-1.fc37.noarch                                                                                                                                                        119/128
+      Verifying        : perl-Git-2.39.1-1.fc37.noarch                                                                                                                                                                120/128
+      Verifying        : perl-URI-5.17-1.fc37.noarch                                                                                                                                                                  121/128
+      Verifying        : subversion-1.14.2-8.fc37.x86_64                                                                                                                                                              122/128
+      Verifying        : subversion-libs-1.14.2-8.fc37.x86_64                                                                                                                                                         123/128
+      Verifying        : systemd-251.11-2.fc37.x86_64                                                                                                                                                                 124/128
+      Verifying        : systemd-networkd-251.11-2.fc37.x86_64                                                                                                                                                        125/128
+      Verifying        : systemd-pam-251.11-2.fc37.x86_64                                                                                                                                                             126/128
+      Verifying        : systemd-resolved-251.11-2.fc37.x86_64                                                                                                                                                        127/128
+      Verifying        : xkeyboard-config-2.36-3.fc37.noarch                                                                                                                                                          128/128
+
+    Installed:
+      apr-1.7.2-2.fc37.x86_64                                apr-util-1.6.3-2.fc37.x86_64                     apr-util-bdb-1.6.3-2.fc37.x86_64                        apr-util-openssl-1.6.3-2.fc37.x86_64
+      binutils-2.38-25.fc37.x86_64                           binutils-gold-2.38-25.fc37.x86_64                cpp-12.2.1-4.fc37.x86_64                                cryptsetup-libs-2.5.0-1.fc37.x86_64
+      dbus-1:1.14.6-1.fc37.x86_64                            dbus-broker-33-1.fc37.x86_64                     dbus-common-1:1.14.6-1.fc37.noarch                      device-mapper-1.02.175-9.fc37.x86_64
+      device-mapper-libs-1.02.175-9.fc37.x86_64              diffutils-3.8-3.fc37.x86_64                      elfutils-debuginfod-client-0.188-3.fc37.x86_64          emacs-filesystem-1:28.2-3.fc37.noarch
+      gc-8.0.6-4.fc37.x86_64                                 gcc-12.2.1-4.fc37.x86_64                         git-2.39.1-1.fc37.x86_64                                git-core-2.39.1-1.fc37.x86_64
+      git-core-doc-2.39.1-1.fc37.noarch                      glibc-devel-2.36-9.fc37.x86_64                   glibc-headers-x86-2.36-9.fc37.noarch                    golang-1.19.5-1.fc37.x86_64
+      golang-bin-1.19.5-1.fc37.x86_64                        golang-src-1.19.5-1.fc37.noarch                  groff-base-1.22.4-10.fc37.x86_64                        guile22-2.2.7-6.fc37.x86_64
+      kernel-headers-6.1.5-200.fc37.x86_64                   kmod-libs-30-2.fc37.x86_64                       less-590-5.fc37.x86_64                                  libargon2-20190702-1.fc37.x86_64
+      libbpf-2:0.8.0-2.fc37.x86_64                           libcbor-0.7.0-7.fc37.x86_64                      libedit-3.1-43.20221009cvs.fc37.x86_64                  libfdisk-2.38.1-1.fc37.x86_64
+      libfido2-1.11.0-3.fc37.x86_64                          libmpc-1.2.1-5.fc37.x86_64                       libpkgconf-1.8.0-3.fc37.x86_64                          libseccomp-2.5.3-3.fc37.x86_64
+      libserf-1.3.9-24.fc37.x86_64                           libtool-ltdl-2.4.7-2.fc37.x86_64                 libutempter-1.2.1-7.fc37.x86_64                         libxcrypt-devel-4.4.33-4.fc37.x86_64
+      libxkbcommon-1.4.1-2.fc37.x86_64                       make-1:4.3-11.fc37.x86_64                        mercurial-6.2.3-1.fc37.x86_64                           ncurses-6.3-4.20220501.fc37.x86_64
+      openssh-8.8p1-7.fc37.x86_64                            openssh-clients-8.8p1-7.fc37.x86_64              perl-AutoLoader-5.74-492.fc37.noarch                    perl-B-1.83-492.fc37.x86_64
+      perl-Carp-1.52-489.fc37.noarch                         perl-Class-Struct-0.66-492.fc37.noarch           perl-Data-Dumper-2.184-490.fc37.x86_64                  perl-Digest-1.20-489.fc37.noarch
+      perl-Digest-MD5-2.58-489.fc37.x86_64                   perl-DynaLoader-1.52-492.fc37.x86_64             perl-Encode-4:3.19-492.fc37.x86_64                      perl-Errno-1.36-492.fc37.x86_64
+      perl-Error-1:0.17029-10.fc37.noarch                    perl-Exporter-5.77-489.fc37.noarch               perl-Fcntl-1.15-492.fc37.x86_64                         perl-File-Basename-2.85-492.fc37.noarch
+      perl-File-Find-1.40-492.fc37.noarch                    perl-File-Path-2.18-489.fc37.noarch              perl-File-Temp-1:0.231.100-489.fc37.noarch              perl-File-stat-1.12-492.fc37.noarch
+      perl-FileHandle-2.03-492.fc37.noarch                   perl-Getopt-Long-1:2.54-1.fc37.noarch            perl-Getopt-Std-1.13-492.fc37.noarch                    perl-Git-2.39.1-1.fc37.noarch
+      perl-HTTP-Tiny-0.082-1.fc37.noarch                     perl-IO-1.50-492.fc37.x86_64                     perl-IO-Socket-IP-0.41-490.fc37.noarch                  perl-IO-Socket-SSL-2.075-1.fc37.noarch
+      perl-IPC-Open3-1.22-492.fc37.noarch                    perl-MIME-Base64-3.16-489.fc37.x86_64            perl-Mozilla-CA-20211001-4.fc37.noarch                  perl-NDBM_File-1.15-492.fc37.x86_64
+      perl-Net-SSLeay-1.92-4.fc37.x86_64                     perl-POSIX-2.03-492.fc37.x86_64                  perl-PathTools-3.84-489.fc37.x86_64                     perl-Pod-Escapes-1:1.07-489.fc37.noarch
+      perl-Pod-Perldoc-3.28.01-490.fc37.noarch               perl-Pod-Simple-1:3.43-490.fc37.noarch           perl-Pod-Usage-4:2.03-3.fc37.noarch                     perl-Scalar-List-Utils-5:1.63-489.fc37.x86_64
+      perl-SelectSaver-1.02-492.fc37.noarch                  perl-Socket-4:2.036-1.fc37.x86_64                perl-Storable-1:3.26-489.fc37.x86_64                    perl-Symbol-1.09-492.fc37.noarch
+      perl-Term-ANSIColor-5.01-490.fc37.noarch               perl-Term-Cap-1.17-489.fc37.noarch               perl-TermReadKey-2.38-14.fc37.x86_64                    perl-Text-ParseWords-3.31-489.fc37.noarch
+      perl-Text-Tabs+Wrap-2021.0814-489.fc37.noarch          perl-Time-Local-2:1.300-489.fc37.noarch          perl-URI-5.17-1.fc37.noarch                             perl-base-2.27-492.fc37.noarch
+      perl-constant-1.33-490.fc37.noarch                     perl-if-0.61.000-492.fc37.noarch                 perl-interpreter-4:5.36.0-492.fc37.x86_64               perl-lib-0.65-492.fc37.x86_64
+      perl-libnet-3.14-490.fc37.noarch                       perl-libs-4:5.36.0-492.fc37.x86_64               perl-mro-1.26-492.fc37.x86_64                           perl-overload-1.35-492.fc37.noarch
+      perl-overloading-0.02-492.fc37.noarch                  perl-parent-1:0.238-489.fc37.noarch              perl-podlators-1:4.14-489.fc37.noarch                   perl-subs-1.04-492.fc37.noarch
+      perl-vars-1.05-492.fc37.noarch                         pkgconf-1.8.0-3.fc37.x86_64                      pkgconf-m4-1.8.0-3.fc37.noarch                          pkgconf-pkg-config-1.8.0-3.fc37.x86_64
+      python3-fb-re2-1.0.7-10.fc37.x86_64                    qrencode-libs-4.1.1-3.fc37.x86_64                re2-1:20211101-3.fc36.x86_64                            subversion-1.14.2-8.fc37.x86_64
+      subversion-libs-1.14.2-8.fc37.x86_64                   systemd-251.11-2.fc37.x86_64                     systemd-networkd-251.11-2.fc37.x86_64                   systemd-pam-251.11-2.fc37.x86_64
+      systemd-resolved-251.11-2.fc37.x86_64                  utf8proc-2.7.0-3.fc37.x86_64                     util-linux-2.38.1-1.fc37.x86_64                         xkeyboard-config-2.36-3.fc37.noarch
+
+    Complete!
+  expected_dependencies:
+    - name: apr
+      version: 1.7.2-2.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: apr1.7.2-2.fc37x86_64.rpm
+      download_location: Fedora
+    - name: apr-util
+      version: 1.6.3-2.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: apr-util1.6.3-2.fc37x86_64.rpm
+      download_location: Fedora
+    - name: apr-util-bdb
+      version: 1.6.3-2.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: apr-util-bdb1.6.3-2.fc37x86_64.rpm
+      download_location: Fedora
+    - name: apr-util-openssl
+      version: 1.6.3-2.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: apr-util-openssl1.6.3-2.fc37x86_64.rpm
+      download_location: Fedora
+    - name: binutils
+      version: 2.38-25.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: binutils2.38-25.fc37x86_64.rpm
+      download_location: Fedora
+    - name: binutils-gold
+      version: 2.38-25.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: binutils-gold2.38-25.fc37x86_64.rpm
+      download_location: Fedora
+    - name: cpp
+      version: 12.2.1-4.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: cpp12.2.1-4.fc37x86_64.rpm
+      download_location: Fedora
+    - name: cryptsetup-libs
+      version: 2.5.0-1.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: cryptsetup-libs2.5.0-1.fc37x86_64.rpm
+      download_location: Fedora
+    - name: dbus-broker
+      version: 33-1.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: dbus-broker33-1.fc37x86_64.rpm
+      download_location: Fedora
+    - name: device-mapper
+      version: 1.02.175-9.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: device-mapper1.02.175-9.fc37x86_64.rpm
+      download_location: Fedora
+    - name: device-mapper-libs
+      version: 1.02.175-9.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: device-mapper-libs1.02.175-9.fc37x86_64.rpm
+      download_location: Fedora
+    - name: diffutils
+      version: 3.8-3.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: diffutils3.8-3.fc37x86_64.rpm
+      download_location: Fedora
+    - name: elfutils-debuginfod-client
+      version: 0.188-3.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: elfutils-debuginfod-client0.188-3.fc37x86_64.rpm
+      download_location: Fedora
+    - name: gc
+      version: 8.0.6-4.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: gc8.0.6-4.fc37x86_64.rpm
+      download_location: Fedora
+    - name: gcc
+      version: 12.2.1-4.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: gcc12.2.1-4.fc37x86_64.rpm
+      download_location: Fedora
+    - name: git
+      version: 2.39.1-1.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: git2.39.1-1.fc37x86_64.rpm
+      download_location: Fedora
+    - name: git-core
+      version: 2.39.1-1.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: git-core2.39.1-1.fc37x86_64.rpm
+      download_location: Fedora
+    - name: git-core-doc
+      version: 2.39.1-1.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: git-core-doc2.39.1-1.fc37noarch.rpm
+      download_location: Fedora
+    - name: glibc-devel
+      version: 2.36-9.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: glibc-devel2.36-9.fc37x86_64.rpm
+      download_location: Fedora
+    - name: glibc-headers
+      version: x86-2.36-9.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: glibc-headersx86-2.36-9.fc37noarch.rpm
+      download_location: Fedora
+    - name: golang
+      version: 1.19.5-1.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: golang1.19.5-1.fc37x86_64.rpm
+      download_location: Fedora
+    - name: golang-bin
+      version: 1.19.5-1.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: golang-bin1.19.5-1.fc37x86_64.rpm
+      download_location: Fedora
+    - name: golang-src
+      version: 1.19.5-1.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: golang-src1.19.5-1.fc37noarch.rpm
+      download_location: Fedora
+    - name: groff-base
+      version: 1.22.4-10.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: groff-base1.22.4-10.fc37x86_64.rpm
+      download_location: Fedora
+    - name: kernel-headers
+      version: 6.1.5-200.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: kernel-headers6.1.5-200.fc37x86_64.rpm
+      download_location: Fedora
+    - name: kmod-libs
+      version: 30-2.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: kmod-libs30-2.fc37x86_64.rpm
+      download_location: Fedora
+    - name: less
+      version: 590-5.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: less590-5.fc37x86_64.rpm
+      download_location: Fedora
+    - name: libcbor
+      version: 0.7.0-7.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: libcbor0.7.0-7.fc37x86_64.rpm
+      download_location: Fedora
+    - name: libedit
+      version: 3.1-43.20221009cvs.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: libedit3.1-43.20221009cvs.fc37x86_64.rpm
+      download_location: Fedora
+    - name: libfdisk
+      version: 2.38.1-1.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: libfdisk2.38.1-1.fc37x86_64.rpm
+      download_location: Fedora
+    - name: libmpc
+      version: 1.2.1-5.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: libmpc1.2.1-5.fc37x86_64.rpm
+      download_location: Fedora
+    - name: libpkgconf
+      version: 1.8.0-3.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: libpkgconf1.8.0-3.fc37x86_64.rpm
+      download_location: Fedora
+    - name: libseccomp
+      version: 2.5.3-3.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: libseccomp2.5.3-3.fc37x86_64.rpm
+      download_location: Fedora
+    - name: libserf
+      version: 1.3.9-24.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: libserf1.3.9-24.fc37x86_64.rpm
+      download_location: Fedora
+    - name: libtool-ltdl
+      version: 2.4.7-2.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: libtool-ltdl2.4.7-2.fc37x86_64.rpm
+      download_location: Fedora
+    - name: libutempter
+      version: 1.2.1-7.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: libutempter1.2.1-7.fc37x86_64.rpm
+      download_location: Fedora
+    - name: libxcrypt-devel
+      version: 4.4.33-4.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: libxcrypt-devel4.4.33-4.fc37x86_64.rpm
+      download_location: Fedora
+    - name: libxkbcommon
+      version: 1.4.1-2.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: libxkbcommon1.4.1-2.fc37x86_64.rpm
+      download_location: Fedora
+    - name: mercurial
+      version: 6.2.3-1.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: mercurial6.2.3-1.fc37x86_64.rpm
+      download_location: Fedora
+    - name: ncurses
+      version: 6.3-4.20220501.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: ncurses6.3-4.20220501.fc37x86_64.rpm
+      download_location: Fedora
+    - name: openssh
+      version: 8.8p1-7.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: openssh8.8p1-7.fc37x86_64.rpm
+      download_location: Fedora
+    - name: openssh-clients
+      version: 8.8p1-7.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: openssh-clients8.8p1-7.fc37x86_64.rpm
+      download_location: Fedora
+    - name: perl-AutoLoader
+      version: 5.74-492.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: perl-AutoLoader5.74-492.fc37noarch.rpm
+      download_location: Fedora
+    - name: perl-B
+      version: 1.83-492.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: perl-B1.83-492.fc37x86_64.rpm
+      download_location: Fedora
+    - name: perl-Carp
+      version: 1.52-489.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: perl-Carp1.52-489.fc37noarch.rpm
+      download_location: Fedora
+    - name: perl-Class-Struct
+      version: 0.66-492.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: perl-Class-Struct0.66-492.fc37noarch.rpm
+      download_location: Fedora
+    - name: perl-Data-Dumper
+      version: 2.184-490.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: perl-Data-Dumper2.184-490.fc37x86_64.rpm
+      download_location: Fedora
+    - name: perl-Digest
+      version: 1.20-489.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: perl-Digest1.20-489.fc37noarch.rpm
+      download_location: Fedora
+    - name: perl-Digest
+      version: MD5-2.58-489.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: perl-DigestMD5-2.58-489.fc37x86_64.rpm
+      download_location: Fedora
+    - name: perl-DynaLoader
+      version: 1.52-492.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: perl-DynaLoader1.52-492.fc37x86_64.rpm
+      download_location: Fedora
+    - name: perl-Errno
+      version: 1.36-492.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: perl-Errno1.36-492.fc37x86_64.rpm
+      download_location: Fedora
+    - name: perl-Exporter
+      version: 5.77-489.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: perl-Exporter5.77-489.fc37noarch.rpm
+      download_location: Fedora
+    - name: perl-Fcntl
+      version: 1.15-492.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: perl-Fcntl1.15-492.fc37x86_64.rpm
+      download_location: Fedora
+    - name: perl-File-Basename
+      version: 2.85-492.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: perl-File-Basename2.85-492.fc37noarch.rpm
+      download_location: Fedora
+    - name: perl-File-Find
+      version: 1.40-492.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: perl-File-Find1.40-492.fc37noarch.rpm
+      download_location: Fedora
+    - name: perl-File-Path
+      version: 2.18-489.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: perl-File-Path2.18-489.fc37noarch.rpm
+      download_location: Fedora
+    - name: perl-File-stat
+      version: 1.12-492.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: perl-File-stat1.12-492.fc37noarch.rpm
+      download_location: Fedora
+    - name: perl-FileHandle
+      version: 2.03-492.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: perl-FileHandle2.03-492.fc37noarch.rpm
+      download_location: Fedora
+    - name: perl-Getopt-Std
+      version: 1.13-492.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: perl-Getopt-Std1.13-492.fc37noarch.rpm
+      download_location: Fedora
+    - name: perl-Git
+      version: 2.39.1-1.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: perl-Git2.39.1-1.fc37noarch.rpm
+      download_location: Fedora
+    - name: perl-HTTP-Tiny
+      version: 0.082-1.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: perl-HTTP-Tiny0.082-1.fc37noarch.rpm
+      download_location: Fedora
+    - name: perl-IO
+      version: 1.50-492.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: perl-IO1.50-492.fc37x86_64.rpm
+      download_location: Fedora
+    - name: perl-IO-Socket-IP
+      version: 0.41-490.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: perl-IO-Socket-IP0.41-490.fc37noarch.rpm
+      download_location: Fedora
+    - name: perl-IO-Socket-SSL
+      version: 2.075-1.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: perl-IO-Socket-SSL2.075-1.fc37noarch.rpm
+      download_location: Fedora
+    - name: perl-IPC
+      version: Open3-1.22-492.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: perl-IPCOpen3-1.22-492.fc37noarch.rpm
+      download_location: Fedora
+    - name: perl-MIME
+      version: Base64-3.16-489.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: perl-MIMEBase64-3.16-489.fc37x86_64.rpm
+      download_location: Fedora
+    - name: perl-Mozilla-CA
+      version: 20211001-4.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: perl-Mozilla-CA20211001-4.fc37noarch.rpm
+      download_location: Fedora
+    - name: File
+      version: 1.15-492.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: File1.15-492.fc37x86_64.rpm
+      download_location: Fedora
+    - name: perl-Net-SSLeay
+      version: 1.92-4.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: perl-Net-SSLeay1.92-4.fc37x86_64.rpm
+      download_location: Fedora
+    - name: perl-POSIX
+      version: 2.03-492.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: perl-POSIX2.03-492.fc37x86_64.rpm
+      download_location: Fedora
+    - name: perl-PathTools
+      version: 3.84-489.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: perl-PathTools3.84-489.fc37x86_64.rpm
+      download_location: Fedora
+    - name: perl-Pod-Perldoc
+      version: 3.28.01-490.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: perl-Pod-Perldoc3.28.01-490.fc37noarch.rpm
+      download_location: Fedora
+    - name: perl-SelectSaver
+      version: 1.02-492.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: perl-SelectSaver1.02-492.fc37noarch.rpm
+      download_location: Fedora
+    - name: perl-Symbol
+      version: 1.09-492.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: perl-Symbol1.09-492.fc37noarch.rpm
+      download_location: Fedora
+    - name: perl-Term-ANSIColor
+      version: 5.01-490.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: perl-Term-ANSIColor5.01-490.fc37noarch.rpm
+      download_location: Fedora
+    - name: perl-Term-Cap
+      version: 1.17-489.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: perl-Term-Cap1.17-489.fc37noarch.rpm
+      download_location: Fedora
+    - name: perl-TermReadKey
+      version: 2.38-14.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: perl-TermReadKey2.38-14.fc37x86_64.rpm
+      download_location: Fedora
+    - name: perl-Text-ParseWords
+      version: 3.31-489.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: perl-Text-ParseWords3.31-489.fc37noarch.rpm
+      download_location: Fedora
+    - name: Wrap
+      version: 2021.0814-489.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: Wrap2021.0814-489.fc37noarch.rpm
+      download_location: Fedora
+    - name: perl-URI
+      version: 5.17-1.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: perl-URI5.17-1.fc37noarch.rpm
+      download_location: Fedora
+    - name: perl-base
+      version: 2.27-492.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: perl-base2.27-492.fc37noarch.rpm
+      download_location: Fedora
+    - name: perl-constant
+      version: 1.33-490.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: perl-constant1.33-490.fc37noarch.rpm
+      download_location: Fedora
+    - name: perl-if
+      version: 0.61.000-492.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: perl-if0.61.000-492.fc37noarch.rpm
+      download_location: Fedora
+    - name: perl-lib
+      version: 0.65-492.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: perl-lib0.65-492.fc37x86_64.rpm
+      download_location: Fedora
+    - name: perl-libnet
+      version: 3.14-490.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: perl-libnet3.14-490.fc37noarch.rpm
+      download_location: Fedora
+    - name: perl-mro
+      version: 1.26-492.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: perl-mro1.26-492.fc37x86_64.rpm
+      download_location: Fedora
+    - name: perl-overload
+      version: 1.35-492.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: perl-overload1.35-492.fc37noarch.rpm
+      download_location: Fedora
+    - name: perl-overloading
+      version: 0.02-492.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: perl-overloading0.02-492.fc37noarch.rpm
+      download_location: Fedora
+    - name: perl-subs
+      version: 1.04-492.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: perl-subs1.04-492.fc37noarch.rpm
+      download_location: Fedora
+    - name: perl-vars
+      version: 1.05-492.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: perl-vars1.05-492.fc37noarch.rpm
+      download_location: Fedora
+    - name: pkgconf
+      version: 1.8.0-3.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: pkgconf1.8.0-3.fc37x86_64.rpm
+      download_location: Fedora
+    - name: pkgconf
+      version: m4-1.8.0-3.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: pkgconfm4-1.8.0-3.fc37noarch.rpm
+      download_location: Fedora
+    - name: pkgconf-pkg-config
+      version: 1.8.0-3.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: pkgconf-pkg-config1.8.0-3.fc37x86_64.rpm
+      download_location: Fedora
+    - name: '-fb'
+      version: re2-1.0.7-10.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: '-fbre2-1.0.7-10.fc37x86_64.rpm'
+      download_location: Fedora
+    - name: qrencode-libs
+      version: 4.1.1-3.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: qrencode-libs4.1.1-3.fc37x86_64.rpm
+      download_location: Fedora
+    - name: subversion
+      version: 1.14.2-8.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: subversion1.14.2-8.fc37x86_64.rpm
+      download_location: Fedora
+    - name: subversion-libs
+      version: 1.14.2-8.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: subversion-libs1.14.2-8.fc37x86_64.rpm
+      download_location: Fedora
+    - name: systemd
+      version: 251.11-2.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: systemd251.11-2.fc37x86_64.rpm
+      download_location: Fedora
+    - name: systemd-networkd
+      version: 251.11-2.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: systemd-networkd251.11-2.fc37x86_64.rpm
+      download_location: Fedora
+    - name: systemd-pam
+      version: 251.11-2.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: systemd-pam251.11-2.fc37x86_64.rpm
+      download_location: Fedora
+    - name: systemd-resolved
+      version: 251.11-2.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: systemd-resolved251.11-2.fc37x86_64.rpm
+      download_location: Fedora
+    - name: proc
+      version: 2.7.0-3.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: proc2.7.0-3.fc37x86_64.rpm
+      download_location: Fedora
+    - name: util-linux
+      version: 2.38.1-1.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: util-linux2.38.1-1.fc37x86_64.rpm
+      download_location: Fedora
+    - name: xkeyboard-config
+      version: 2.36-3.fc37
+      type: Fedora
+      result: consumed
+      extraction_source: xkeyboard-config2.36-3.fc37noarch.rpm
+      download_location: Fedora
