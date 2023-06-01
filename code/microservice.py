@@ -109,7 +109,7 @@ def list_rules():
 async def generate_findings(
     type: Optional[str] = "buildlog",
     format: Optional[str] = "json",
-    request_body: str = Body(..., media_type="text/plain"),
+    request_body: str = Body('', media_type="text/plain"),
 ):
     if type == "buildlog":
         findings, errors =  generate_buildlog_findings(request_body)
@@ -136,7 +136,7 @@ async def generate_findings(
 async def generate_dependencies(
     type: Optional[str] = "buildlog",
     format: Optional[str] = "json",
-    request_body: str = Body(..., media_type="text/plain"),
+    request_body: str = Body('', media_type="text/plain"),
 ):
     if type == "buildlog":
         dependencies, errors =  generate_buildlog_dependencies(request_body)
@@ -164,7 +164,7 @@ async def generate_dependencies(
 async def generate_report(
     type: Optional[str] = "buildlog",
     format: Optional[str] = "json",
-    request_body: str = Body(..., media_type="text/plain"),
+    request_body: str = Body('', media_type="text/plain"),
 ):
     if type == "buildlog":
         dependencies, dep_errors = generate_buildlog_dependencies(request_body)
