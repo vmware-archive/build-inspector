@@ -121,7 +121,7 @@ class FunctionalTestRunner():
         body = test_config.config.input_data
         url = self.API_REPORT_PATH
         try:
-            response = self.api_client.post(url=url,data=body.encode('utf-8'))
+            response = self.api_client.post(url=url, data=body.encode('utf-8'), headers={'Content-Type': 'text/plain'})
             if response.status_code == 200:
                 return response.json()
             else:
