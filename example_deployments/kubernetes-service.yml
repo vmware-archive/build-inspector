@@ -1,0 +1,86 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: build-inspector-config
+data:
+  defaults.yaml: |
+    ## Per-parser timeout when generating findings and dependencies (Seconds)
+    parser_timeout: 10
+    ## List of parsers to disable
+    disabled_parsers:
+      - CurlParser
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: build-inspector
+spec:
+  selector:
+    matchLabels:
+      app: build-inspector
+  template:
+    metadata:
+      labels:
+        app: build-inspector
+    spec:
+      containers:
+      - name: build-inspector
+        image: ghcr.io/vmware-labs/build-inspector:v1.0.0
+        resources:
+          limits:
+            memory: "300M"
+            cpu: "500m"
+          requests:
+            memory: "150M"
+            cpu: "200m"
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - name: build-inspector-config
+          mountPath: /code/
+        securityContext:
+          allowPrivilegeEscalation: false
+          runAsUser: 1000
+      volumes:
+        - name: build-inspector-config
+          configMap:
+            name: build-inspector-config
+            items:
+            - key: defaults.yml
+              path: defaults.yml
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: build-inspector
+  labels:
+    app: build-inspector
+spec:
+  selector:
+    app: build-inspector
+  ports:
+  - port: 8080
+    targetPort: 8080
+
+
+---
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: build-inspector
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: build-inspector
+            port:
+              number: 8080
