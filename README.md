@@ -8,6 +8,8 @@ The Build Inspector service is designed to provide the ability to process plaint
 2. `docker run -d -e SERVICE_PORT=8080 -p 8080:8080 --name bi_localdev bi_localdev`
 3. API documentation can be located at http://localhost:8080/docs/swagger once the container is running.
 
+Additional deployment examples can be found in the [example_deployments](https://github.com/vmware-labs/build-inspector/tree/main/example_deployments) folder.
+
 ## Documentation
 
 API documentation can be located at http://localhost:8080/docs/swagger once the container is running.

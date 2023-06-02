@@ -1,0 +1,11 @@
+services:
+  build-inspector:
+    image: ghcr.io/vmware-labs/build-inspector:v1.0.0
+    ports:
+      - "8080:8080"
+    configs:
+      - source: build-inspector-config
+        target: /code/defaults.yml
+configs:
+  build-inspector-config:
+    file: ./defaults.yml
