@@ -1,4 +1,4 @@
-tests/automated_functional_test/test_requirements.txtcertifi==2023.7.22
+certifi==2023.7.22
 charset-normalizer==2.0.9
 Deprecated==1.2.13
 idna==3.3
