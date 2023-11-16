@@ -18,6 +18,7 @@ from settings import Settings
 from formatters.base import AVAILABLE_FORMATTERS
 from formatters.json import *
 from formatters.spdx import *
+from formatters.cyclonedx import *
 from functools import lru_cache
 import http.client
 import logging

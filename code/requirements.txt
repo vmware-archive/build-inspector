@@ -7,3 +7,4 @@ typing-extensions>=3.10.0
 uvicorn==0.13.4
 yara-python==4.0.5
 spdx-tools==0.6.1
+cyclonedx-python-lib==5.1.1
