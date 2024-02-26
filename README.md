@@ -1,5 +1,7 @@
 # Build Inspector
 
+## Note: Active development on this project has ceased as of Feb 2024, and the project will no longer be maintained.
+
 The Build Inspector service is designed to provide the ability to process plaintext CI/CD build and deployment logs, extract any available software dependency information along with information about actions being taken in the build pipeline that could be vectors for a potential compromise.
 
 ### Build & Run
